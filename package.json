@@ -1,0 +1,49 @@
+{
+    "name": "plantio",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --webpack",
+        "build": "next build --webpack",
+        "start": "next start",
+        "lint": "eslint .",
+        "typecheck": "next typegen && tsc --noEmit",
+        "lint:typed": "eslint --config eslint.typed.config.mjs .",
+        "lint:rules": "node scripts/verify-quality-rules.mjs ./eslint-rules/index.cjs",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "check": "npm run lint && npm run typecheck && npm run lint:typed && npm run lint:rules && npm test && npm run build"
+    },
+    "dependencies": {
+        "clsx": "^2.1.1",
+        "drizzle-orm": "^0.45.4",
+        "next": "16.4.3",
+        "pg": "^8.23.1",
+        "pino": "^10.4.0",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "server-only": "^0.0.1",
+        "tailwind-merge": "^3.7.0",
+        "zod": "^4.6.7"
+    },
+    "devDependencies": {
+        "@next/env": "^16.4.3",
+        "@tailwindcss/postcss": "^4.3.3",
+        "@tailwindcss/turbopack": "^4",
+        "@types/node": "^20.17.0",
+        "@types/pg": "^8.11.10",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "drizzle-kit": "^0.31.0",
+        "eslint": "^9",
+        "eslint-config-next": "16.4.3",
+        "eslint-plugin-drizzle": "^0.2.3",
+        "postcss": "^8.5.31",
+        "tailwindcss": "^4",
+        "typescript": "^5",
+        "typescript-eslint": "^8.24.0",
+        "vitest": "^3.0.0"
+    }
+}
