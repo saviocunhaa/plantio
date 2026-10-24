@@ -76,11 +76,12 @@ O **Plantio Fácil** resolve isso com uma promessa direta: *"Diga onde você est
 - **Testes:** Vitest para lógica de domínio, sanitização de ambiente, ciclo de conexão e testes de fronteira.
 - **Qualidade de código:** ESLint com regras personalizadas do Vibe Coding Toolkit (limite de 350 linhas por arquivo, proibição de console direto, isolamento de dados no cliente e travas em `update/delete` sem `where`).
 
-## Premissas e decisões pendentes
+## Premissas e decisões consolidadas
 
-- *Premissa reversível:* O catálogo inicial de culturas será mantido em JSON versionado (`src/data/culturas.json`) antes da persistência definitiva em banco, permitindo testes rápidos do algoritmo de recomendação sem dependência imediata de PostgreSQL em desenvolvimento.
-- *Decisão externa pendente:* Provedor do modelo Gemma (execução local via Ollama em desenvolvimento vs endpoint de inferência em nuvem).
-- *Decisão externa pendente:* Definição do provedor de geocodificação e clima (Open-Meteo como default sem custo e sem chave de API).
+- *Catálogo agronômico:* 15 culturas completas versionadas em `src/data/culturas.json` validadas com Embrapa Hortaliças, Semiárido e Milho e Sorgo.
+- *Assistente híbrido:* Conexão com Ollama/Gemma 4 local e fallback automático seguro para a base técnica agronômica, via `/api/assistente`.
+- *Geolocalização:* Detecção via GPS (`navigator.geolocation`) com 1 clique e fallback automático por conexão de internet (IP).
+- *Persistência relacional:* Drizzle ORM com schema definido para usuários, locais, plantios, tarefas e diário com migrations geradas em `drizzle/`.
 
 ## Critérios de aceitação
 
@@ -89,10 +90,7 @@ O **Plantio Fácil** resolve isso com uma promessa direta: *"Diga onde você est
 3. O linting padrão e o linting tipado executam sem avisos ou erros (`npm run lint && npm run lint:typed`).
 4. As regras arquiteturais de qualidade são validadas com sucesso (`npm run lint:rules`).
 5. A tela inicial mobile-first carrega com identidade visual limpa em verde terroso e alto contraste.
-
-## Próxima entrega
-
-Implementar o módulo do algoritmo de recomendação agronômica (`src/lib/recommendation/`) com tipagem Zod, base inicial de culturas em JSON e testes unitários cobrindo o cruzamento de clima, espaço e horas de sol.
+6. As 4 abas funcionam de forma integrada (Hoje, Plantar, Minhas Plantas com fotos, Assistente com IA/Embrapa).
 
 ## Manutenção
 

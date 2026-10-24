@@ -42,8 +42,12 @@ plantio/
 │   │   ├── index.ts           # Conexão Drizzle lazy com pool limitado
 │   │   ├── index.test.ts      # Testes do ciclo de vida da conexão
 │   │   └── schema/
-│   │       └── index.ts       # Exportação central de tabelas Drizzle
+│   │       ├── index.ts       # Exportação central de tabelas Drizzle
+│   │       └── plantios.ts    # Tabelas relacionais (usuarios, locais, plantios, tarefas, diario)
 │   └── lib/                   # Utilitários de domínio e infraestrutura
+│       ├── assistant/         # Motor de IA (Gemma 4 via Ollama + fallback Embrapa)
+│       │   ├── engine.ts      # Integração Ollama e regras agronômicas
+│       │   └── types.ts       # Schemas Zod de entrada e resposta
 │       ├── env.ts             # Leitor tipado de variáveis de ambiente
 │       ├── env.test.ts        # Testes de integridade de ambiente
 │       ├── env-schema.ts      # Definição dos schemas Zod de variáveis
@@ -84,3 +88,4 @@ plantio/
 | **Tailwind CSS v4 + PostCSS** | Tailwind v4 com `@tailwindcss/postcss` oferece compilação rápida, compatibilidade nativa com Next.js 16 e estabilidade em todos os ambientes. | Turbopack webpack loader | Adotada para garantir builds estáveis |
 | **Fonte do sistema nativa** | Elimina requisições externas para Google Fonts em tempo de build e garante compatibilidade offline total para PWA em dispositivos móveis. | `next/font/google` (Geist) | Adotada |
 | **Drizzle ORM** | Tipagem estrita ponta a ponta sem overhead de query engine pesada, SQL previsível e portabilidade. | Prisma / Supabase SDK direto | Adotada |
+| **Assistente Híbrido (Gemma + Fallback)** | Consulta local ao Ollama com timeout de 2.5s e chaveamento automático para base agronômica Embrapa sem quebrar a experiência do usuário. | Chamada bloqueante a API externa de IA paga | Adotada |

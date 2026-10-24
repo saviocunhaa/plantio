@@ -4,10 +4,22 @@
     "nome": "Alface Crespa",
     "categoria": "folha",
     "dificuldade": 1,
-    "dias_germinacao": [4, 7],
-    "dias_ate_colheita": [35, 50],
-    "temp_ideal_c": [15, 25],
-    "temp_risco_c": { "min": 5, "max": 33 },
+    "dias_germinacao": [
+      4,
+      7
+    ],
+    "dias_ate_colheita": [
+      35,
+      50
+    ],
+    "temp_ideal_c": [
+      15,
+      25
+    ],
+    "temp_risco_c": {
+      "min": 5,
+      "max": 33
+    },
     "sol_horas_min": 4,
     "agua": "regular",
     "espaco": {
@@ -16,7 +28,20 @@
       "espaco_m2_por_planta": 0.06,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "descricao_curta": "A folha mais fácil e rápida para quem está começando em vasos ou quintais.",
     "dica_iniciante": "Mantenha a terra sempre levemente úmida, como uma esponja espremida.",
     "ponto_de_colheita": "Colha as folhas externas quando estiverem bem formadas ou corte o pé inteiro.",
@@ -87,17 +112,31 @@
         "solucao_caseira": "Borrife calda de fumo leve ou solução de água com 1 colher de chá de detergente neutro."
       }
     ],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "tomate-cereja",
     "nome": "Tomate-cereja",
     "categoria": "fruto",
     "dificuldade": 2,
-    "dias_germinacao": [5, 10],
-    "dias_ate_colheita": [70, 90],
-    "temp_ideal_c": [18, 30],
-    "temp_risco_c": { "min": 10, "max": 36 },
+    "dias_germinacao": [
+      5,
+      10
+    ],
+    "dias_ate_colheita": [
+      70,
+      90
+    ],
+    "temp_ideal_c": [
+      18,
+      30
+    ],
+    "temp_risco_c": {
+      "min": 10,
+      "max": 36
+    },
     "sol_horas_min": 5,
     "agua": "regular",
     "espaco": {
@@ -106,7 +145,17 @@
       "espaco_m2_por_planta": 0.25,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "meses_plantio_geral": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
     "descricao_curta": "Frutinhas doces e produtivas, perfeitas para vasos grandes na varanda ou canteiro.",
     "dica_iniciante": "Precisa de uma estaquinha ou bambu para apoiar o caule conforme cresce.",
     "ponto_de_colheita": "Frutos totalmente vermelhos e soltando facilmente do cacho ao girar.",
@@ -177,17 +226,31 @@
         "solucao_caseira": "Borrife óleo de neem diluído ao entardecer ou água com sabão de coco."
       }
     ],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "coentro",
     "nome": "Coentro",
     "categoria": "erva",
     "dificuldade": 1,
-    "dias_germinacao": [7, 14],
-    "dias_ate_colheita": [30, 45],
-    "temp_ideal_c": [20, 32],
-    "temp_risco_c": { "min": 10, "max": 38 },
+    "dias_germinacao": [
+      7,
+      14
+    ],
+    "dias_ate_colheita": [
+      30,
+      45
+    ],
+    "temp_ideal_c": [
+      20,
+      32
+    ],
+    "temp_risco_c": {
+      "min": 10,
+      "max": 38
+    },
     "sol_horas_min": 4,
     "agua": "regular",
     "espaco": {
@@ -196,7 +259,20 @@
       "espaco_m2_por_planta": 0.04,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "descricao_curta": "Erva aromática clássica do Brasil, adora calor e vai muito bem em jardineiras.",
     "dica_iniciante": "Aperte levemente as sementes antes de plantar para quebrar a casquinha externa.",
     "ponto_de_colheita": "Corte os talos pela base quando as folhas estiverem viçosas antes de florir.",
@@ -247,17 +323,31 @@
         "solucao_caseira": "Lave com jato suave de água ou borrife chá de cavalinha/alho."
       }
     ],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "cebolinha",
     "nome": "Cebolinha",
     "categoria": "erva",
     "dificuldade": 1,
-    "dias_germinacao": [6, 12],
-    "dias_ate_colheita": [50, 70],
-    "temp_ideal_c": [15, 26],
-    "temp_risco_c": { "min": 8, "max": 34 },
+    "dias_germinacao": [
+      6,
+      12
+    ],
+    "dias_ate_colheita": [
+      50,
+      70
+    ],
+    "temp_ideal_c": [
+      15,
+      26
+    ],
+    "temp_risco_c": {
+      "min": 8,
+      "max": 34
+    },
     "sol_horas_min": 4,
     "agua": "regular",
     "espaco": {
@@ -266,7 +356,20 @@
       "espaco_m2_por_planta": 0.05,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "descricao_curta": "Super resistente e brota de novo sempre que você corta para cozinhar.",
     "dica_iniciante": "Corte as folhas deixando cerca de 3 cm da base para rebrotar continuamente.",
     "ponto_de_colheita": "Folhas cilíndricas com pelo menos 15 a 20 cm de altura.",
@@ -312,17 +415,31 @@
         "solucao_caseira": "Limpeza com pano úmido e aspersão de sabão neutro vegetal."
       }
     ],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "rabanete",
     "nome": "Rabanete",
     "categoria": "raiz",
     "dificuldade": 1,
-    "dias_germinacao": [3, 6],
-    "dias_ate_colheita": [25, 35],
-    "temp_ideal_c": [14, 22],
-    "temp_risco_c": { "min": 6, "max": 28 },
+    "dias_germinacao": [
+      3,
+      6
+    ],
+    "dias_ate_colheita": [
+      25,
+      35
+    ],
+    "temp_ideal_c": [
+      14,
+      22
+    ],
+    "temp_risco_c": {
+      "min": 6,
+      "max": 28
+    },
     "sol_horas_min": 4,
     "agua": "regular",
     "espaco": {
@@ -331,7 +448,16 @@
       "espaco_m2_por_planta": 0.05,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [3, 4, 5, 6, 7, 8, 9, 10],
+    "meses_plantio_geral": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
     "descricao_curta": "A raiz mais rápida do jardim: você planta hoje e come em menos de um mês.",
     "dica_iniciante": "Não demore a colher, senão a raiz fica fibrosa e oca.",
     "ponto_de_colheita": "Quando o 'ombro' rosado da raiz começar a despontar da terra (2 a 3 cm de diâmetro).",
@@ -357,17 +483,31 @@
       }
     ],
     "pragas_comuns": [],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "manjericao",
     "nome": "Manjericão",
     "categoria": "erva",
     "dificuldade": 1,
-    "dias_germinacao": [5, 10],
-    "dias_ate_colheita": [45, 60],
-    "temp_ideal_c": [18, 30],
-    "temp_risco_c": { "min": 10, "max": 36 },
+    "dias_germinacao": [
+      5,
+      10
+    ],
+    "dias_ate_colheita": [
+      45,
+      60
+    ],
+    "temp_ideal_c": [
+      18,
+      30
+    ],
+    "temp_risco_c": {
+      "min": 10,
+      "max": 36
+    },
     "sol_horas_min": 5,
     "agua": "regular",
     "espaco": {
@@ -376,7 +516,17 @@
       "espaco_m2_por_planta": 0.1,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [1, 2, 3, 4, 8, 9, 10, 11, 12],
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "descricao_curta": "Aroma maravilhoso para molhos e massas. Ama sol e calor.",
     "dica_iniciante": "Pode a pontinha dos galhos regularmente para o pé ficar bem cheio e arbustivo.",
     "ponto_de_colheita": "Colha ramos de cima para baixo antes da planta produzir flores.",
@@ -402,17 +552,31 @@
       }
     ],
     "pragas_comuns": [],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "feijao-de-corda",
     "nome": "Feijão-de-corda",
     "categoria": "leguminosa",
     "dificuldade": 2,
-    "dias_germinacao": [3, 7],
-    "dias_ate_colheita": [60, 80],
-    "temp_ideal_c": [22, 34],
-    "temp_risco_c": { "min": 15, "max": 40 },
+    "dias_germinacao": [
+      3,
+      7
+    ],
+    "dias_ate_colheita": [
+      60,
+      80
+    ],
+    "temp_ideal_c": [
+      22,
+      34
+    ],
+    "temp_risco_c": {
+      "min": 15,
+      "max": 40
+    },
     "sol_horas_min": 6,
     "agua": "pouca",
     "espaco": {
@@ -420,7 +584,15 @@
       "espaco_m2_por_planta": 0.35,
       "permite_apartamento": false
     },
-    "meses_plantio_geral": [1, 2, 3, 4, 10, 11, 12],
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      10,
+      11,
+      12
+    ],
     "descricao_curta": "Resistente ao calor e à seca, perfeito para quintais e canteiros no Nordeste e Centro-Oeste.",
     "dica_iniciante": "Fixa nitrogênio na terra, deixando o solo mais fértil para os próximos plantios.",
     "ponto_de_colheita": "Vagens cheias e firmes para consumo verde, ou secas no pé para guardar grão.",
@@ -445,17 +617,32 @@
       }
     ],
     "pragas_comuns": [],
-    "fontes": ["Embrapa Semiárido", "Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Semiárido",
+      "Embrapa Hortaliças"
+    ]
   },
   {
     "id": "cenoura",
     "nome": "Cenoura",
     "categoria": "raiz",
     "dificuldade": 3,
-    "dias_germinacao": [7, 14],
-    "dias_ate_colheita": [80, 100],
-    "temp_ideal_c": [15, 23],
-    "temp_risco_c": { "min": 8, "max": 30 },
+    "dias_germinacao": [
+      7,
+      14
+    ],
+    "dias_ate_colheita": [
+      80,
+      100
+    ],
+    "temp_ideal_c": [
+      15,
+      23
+    ],
+    "temp_risco_c": {
+      "min": 8,
+      "max": 30
+    },
     "sol_horas_min": 5,
     "agua": "regular",
     "espaco": {
@@ -464,7 +651,14 @@
       "espaco_m2_por_planta": 0.08,
       "permite_apartamento": true
     },
-    "meses_plantio_geral": [3, 4, 5, 6, 7, 8],
+    "meses_plantio_geral": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
     "descricao_curta": "Raiz adocicada e nutritiva. Exige solo fofo e sem pedrinhas para crescer reta.",
     "dica_iniciante": "Em vasos, escolha um recipiente fundo com pelo menos 25 a 30 cm de profundidade.",
     "ponto_de_colheita": "Folhagem externa começa a tombar e o topo da raiz tem cerca de 2 a 3 cm de largura.",
@@ -490,6 +684,626 @@
       }
     ],
     "pragas_comuns": [],
-    "fontes": ["Embrapa Hortaliças"]
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
+  },
+  {
+    "id": "rucula",
+    "nome": "Rúcula",
+    "categoria": "folha",
+    "dificuldade": 1,
+    "dias_germinacao": [
+      3,
+      7
+    ],
+    "dias_ate_colheita": [
+      30,
+      45
+    ],
+    "temp_ideal_c": [
+      15,
+      24
+    ],
+    "temp_risco_c": {
+      "min": 5,
+      "max": 32
+    },
+    "sol_horas_min": 4,
+    "agua": "regular",
+    "espaco": {
+      "permite_vaso": true,
+      "vaso_litros_min": 2,
+      "espaco_m2_por_planta": 0.05,
+      "permite_apartamento": true
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Folha picante, de crescimento acelerado. Perfeita para jardineiras e saladas frescas.",
+    "dica_iniciante": "Colha as folhas ainda jovens para manter a crocância sem amargar.",
+    "ponto_de_colheita": "Folhas bem verdes com 10 a 15 cm de comprimento.",
+    "materiais_iniciais": [
+      "Jardineira ou vaso de 15 cm de profundidade",
+      "Substrato para hortaliças fofo e adubado",
+      "Sementes de rúcula cultivada",
+      "Borrifador de água"
+    ],
+    "fases": [
+      {
+        "id": "semeadura",
+        "nome": "Semeadura e Germinação",
+        "dias_inicio": 0,
+        "dias_fim": 6,
+        "tarefas": [
+          {
+            "titulo": "Manter a terra fresca e úmida",
+            "como_fazer": "Borrife água pela manhã e ao fim da tarde sem encharcar.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Brotinhos saindo do solo já entre o 3º e 5º dia."
+      },
+      {
+        "id": "crescimento",
+        "nome": "Crescimento Vegetativo",
+        "dias_inicio": 7,
+        "dias_fim": 25,
+        "tarefas": [
+          {
+            "titulo": "Rega moderada na base",
+            "como_fazer": "Regue a terra ao redor dos pezinhos nas horas mais frescas do dia.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Folhas desenvolvendo recorte característico da rúcula."
+      },
+      {
+        "id": "colheita",
+        "nome": "Colheita Sucessiva",
+        "dias_inicio": 26,
+        "dias_fim": 45,
+        "tarefas": [
+          {
+            "titulo": "Colher folhas externas",
+            "como_fazer": "Corte com tesoura as folhas maiores pela base; novas folhas continuarão saindo do miolo.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Plantio verde e folhas tenras antes do surgimento do pendão floral."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Lagartas minadoras",
+        "sintomas": "Rastros brancos transparentes desenhados no interior das folhas.",
+        "solucao_caseira": "Retire as folhas afetadas manualmente e descarte longe da horta."
+      }
+    ],
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
+  },
+  {
+    "id": "pimenta",
+    "nome": "Pimenta Dedo-de-Moça",
+    "categoria": "fruto",
+    "dificuldade": 2,
+    "dias_germinacao": [
+      7,
+      14
+    ],
+    "dias_ate_colheita": [
+      80,
+      110
+    ],
+    "temp_ideal_c": [
+      20,
+      32
+    ],
+    "temp_risco_c": {
+      "min": 12,
+      "max": 38
+    },
+    "sol_horas_min": 6,
+    "agua": "regular",
+    "espaco": {
+      "permite_vaso": true,
+      "vaso_litros_min": 8,
+      "espaco_m2_por_planta": 0.3,
+      "permite_apartamento": true
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Planta resistente e produtiva. Dá lindos frutos vermelhos e decora varandas e quintais.",
+    "dica_iniciante": "Ama sol direto. Quanto mais sol direto receber, mais picantes e saborosas serão as pimentas.",
+    "ponto_de_colheita": "Frutos alongados completamente vermelhos e firmes.",
+    "materiais_iniciais": [
+      "Vaso médio (mínimo 8 a 10 litros) com boa drenagem",
+      "Terra vegetal misturada com húmus e areia",
+      "Sementes de pimenta dedo-de-moça ou muda sadia"
+    ],
+    "fases": [
+      {
+        "id": "desenvolvimento",
+        "nome": "Crescimento e Floração",
+        "dias_inicio": 0,
+        "dias_fim": 60,
+        "tarefas": [
+          {
+            "titulo": "Rega profunda sem encharque",
+            "como_fazer": "Regue quando o topo da terra estiver seco. Evite pratinho com água acumulada.",
+            "frequencia_dias": 2
+          },
+          {
+            "titulo": "Adubação com cinzas ou húmus",
+            "como_fazer": "Adicione 1 colher de cinza de madeira vegetal ou húmus na terra para estimular flores.",
+            "frequencia_dias": 15
+          }
+        ],
+        "o_que_observar": "Flores brancas delicadas surgindo nos nós dos galhos."
+      },
+      {
+        "id": "frutificacao",
+        "nome": "Frutificação e Amadurecimento",
+        "dias_inicio": 61,
+        "dias_fim": 110,
+        "tarefas": [
+          {
+            "titulo": "Apoio de haste e colheita",
+            "como_fazer": "Se a planta carregar muitos frutos, amarre delicadamente a um tutor de madeira.",
+            "frequencia_dias": 7
+          }
+        ],
+        "o_que_observar": "Pimentas mudando gradualmente de verde para vermelho vivo."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Cochonilhas",
+        "sintomas": "Pontos brancos semelhantes a algodão nos caules e nas axilas das folhas.",
+        "solucao_caseira": "Limpeza com algodão embebido em água e sabão de coco neutro."
+      }
+    ],
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
+  },
+  {
+    "id": "quiabo",
+    "nome": "Quiabo Santa Cruz",
+    "categoria": "fruto",
+    "dificuldade": 2,
+    "dias_germinacao": [
+      5,
+      10
+    ],
+    "dias_ate_colheita": [
+      60,
+      80
+    ],
+    "temp_ideal_c": [
+      22,
+      35
+    ],
+    "temp_risco_c": {
+      "min": 15,
+      "max": 42
+    },
+    "sol_horas_min": 6,
+    "agua": "regular",
+    "espaco": {
+      "permite_vaso": false,
+      "espaco_m2_por_planta": 0.4,
+      "permite_apartamento": false
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      9,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Planta rústica e tropical, apaixonada por calor. Produz frutos diariamente por semanas.",
+    "dica_iniciante": "Colha os quiabos pequenos (7 a 10 cm); se passarem do ponto, ficam duros e fibrosos.",
+    "ponto_de_colheita": "Vagens verdes com ponta macia que quebra facilmente ao ser dobrada com o polegar.",
+    "materiais_iniciais": [
+      "Canteiro em quintal ou terreno com terra solta e adubada",
+      "Sementes de quiabo Santa Cruz ou Valença"
+    ],
+    "fases": [
+      {
+        "id": "crescimento",
+        "nome": "Desenvolvimento do Arbusto",
+        "dias_inicio": 0,
+        "dias_fim": 45,
+        "tarefas": [
+          {
+            "titulo": "Rega profunda no solo",
+            "como_fazer": "Molhe bem o pé da planta 2 a 3 vezes por semana em dias secos.",
+            "frequencia_dias": 3
+          }
+        ],
+        "o_que_observar": "Haste principal crescendo ereta com flores amarelas de centro arroxeado."
+      },
+      {
+        "id": "colheita_continua",
+        "nome": "Colheita Frequente",
+        "dias_inicio": 46,
+        "dias_fim": 80,
+        "tarefas": [
+          {
+            "titulo": "Colher frutos a cada 2 dias",
+            "como_fazer": "Use tesoura ou faca para cortar o cabinho do quiabo sem ferir o caule principal.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Novos quiabos surgindo rapidamente logo acima dos nós já colhidos."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Pulgão do algodoeiro",
+        "sintomas": "Folhas enrugadas com formigas circulando ao redor.",
+        "solucao_caseira": "Pulverização de calda de sabão neutro e óleo vegetal (1 colher de chá por litro)."
+      }
+    ],
+    "fontes": [
+      "Embrapa Hortaliças",
+      "Embrapa Semiárido"
+    ]
+  },
+  {
+    "id": "maxixe",
+    "nome": "Maxixe do Norte",
+    "categoria": "fruto",
+    "dificuldade": 2,
+    "dias_germinacao": [
+      4,
+      8
+    ],
+    "dias_ate_colheita": [
+      55,
+      75
+    ],
+    "temp_ideal_c": [
+      24,
+      35
+    ],
+    "temp_risco_c": {
+      "min": 16,
+      "max": 42
+    },
+    "sol_horas_min": 6,
+    "agua": "regular",
+    "espaco": {
+      "permite_vaso": false,
+      "espaco_m2_por_planta": 0.5,
+      "permite_apartamento": false
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Fruto tradicional do Nordeste, rasteiro ou trepador, resistente e muito produtivo.",
+    "dica_iniciante": "Conduzir as ramas em uma cerca ou estacas mantém os maxixes limpos e fáceis de encontrar.",
+    "ponto_de_colheita": "Frutos verdes claros com espinhos moles e flexíveis.",
+    "materiais_iniciais": [
+      "Espaço no chão do quintal ou cerca para apoiar as ramas",
+      "Sementes de maxixe do norte liso ou espinhoso"
+    ],
+    "fases": [
+      {
+        "id": "ramificacao",
+        "nome": "Espalhamento das Ramas",
+        "dias_inicio": 0,
+        "dias_fim": 40,
+        "tarefas": [
+          {
+            "titulo": "Guiar ramas e regar",
+            "como_fazer": "Direcione as ramas para a cerca ou espaço livre e regue o solo nas primeiras horas da manhã.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Pequenas flores amarelas desabrochando ao longo das gavinhas."
+      },
+      {
+        "id": "colheita",
+        "nome": "Ponto de Colheita",
+        "dias_inicio": 41,
+        "dias_fim": 75,
+        "tarefas": [
+          {
+            "titulo": "Colheita de maxixes tenros",
+            "como_fazer": "Corte o pedúnculo dos maxixes ainda tenros antes que comecem a amarelar.",
+            "frequencia_dias": 3
+          }
+        ],
+        "o_que_observar": "Frutos firmes e espinhos tenros."
+      }
+    ],
+    "pragas_comuns": [],
+    "fontes": [
+      "Embrapa Semiárido",
+      "Embrapa Hortaliças"
+    ]
+  },
+  {
+    "id": "milho",
+    "nome": "Milho-Verde",
+    "categoria": "fruto",
+    "dificuldade": 3,
+    "dias_germinacao": [
+      4,
+      7
+    ],
+    "dias_ate_colheita": [
+      75,
+      95
+    ],
+    "temp_ideal_c": [
+      20,
+      32
+    ],
+    "temp_risco_c": {
+      "min": 12,
+      "max": 38
+    },
+    "sol_horas_min": 6,
+    "agua": "abundante",
+    "espaco": {
+      "permite_vaso": false,
+      "espaco_m2_por_planta": 0.25,
+      "permite_apartamento": false
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Espigas saborosas para cozinhar ou assar. Plante sempre em bloco para favorecer a polinização pelo vento.",
+    "dica_iniciante": "Nunca plante uma única linha; agrupe pelo menos 4 a 8 pés juntos para garantir espigas com grãos cheios.",
+    "ponto_de_colheita": "Cabelo da espiga seco e marrom-escuro; grão solta líquido leitoso ao ser pressionado com a unha.",
+    "materiais_iniciais": [
+      "Área de terra em quintal ou terreno com pelo menos 2 m²",
+      "Sementes de milho para consumo verde (híbrido ou variedade crioula)"
+    ],
+    "fases": [
+      {
+        "id": "crescimento_inicial",
+        "nome": "Crescimento e Adubação",
+        "dias_inicio": 0,
+        "dias_fim": 40,
+        "tarefas": [
+          {
+            "titulo": "Adubação nitrogenada de cobertura",
+            "como_fazer": "Adicione esterco curtido ou composto orgânico ao redor dos caules quando as plantas atingirem altura do joelho.",
+            "frequencia_dias": 20
+          }
+        ],
+        "o_que_observar": "Plantas ganhando altura rapidamente com folhas largas e verdes."
+      },
+      {
+        "id": "pendao_e_espiga",
+        "nome": "Polinização e Formação da Espiga",
+        "dias_inicio": 41,
+        "dias_fim": 95,
+        "tarefas": [
+          {
+            "titulo": "Manter solo úmido durante floração",
+            "como_fazer": "O milho não pode passar sede na fase de formação das espigas. Regue copiosamente.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Pendão soltando pólen amarelo no topo e espigas soltando sedas sedosas."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Lagarta-do-cartucho",
+        "sintomas": "Folhas do miolo da planta furadas e com pequenos excrementos.",
+        "solucao_caseira": "Coloque um punhado de cinza ou terra fina no cartucho central para sufocar a lagarta."
+      }
+    ],
+    "fontes": [
+      "Embrapa Milho e Sorgo"
+    ]
+  },
+  {
+    "id": "macaxeira",
+    "nome": "Macaxeira (Aipim)",
+    "categoria": "raiz",
+    "dificuldade": 2,
+    "dias_germinacao": [
+      10,
+      20
+    ],
+    "dias_ate_colheita": [
+      240,
+      300
+    ],
+    "temp_ideal_c": [
+      22,
+      34
+    ],
+    "temp_risco_c": {
+      "min": 14,
+      "max": 40
+    },
+    "sol_horas_min": 6,
+    "agua": "pouca",
+    "espaco": {
+      "permite_vaso": false,
+      "espaco_m2_por_planta": 0.8,
+      "permite_apartamento": false
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Mandioca de mesa rústica e saborosa. Aguenta estiagem e produz raízes volumosas.",
+    "dica_iniciante": "Plante pedaços de manivas (pedaços de caule de 15 a 20 cm) inclinados na terra solta.",
+    "ponto_de_colheita": "Terra ao redor do caule começa a rachar com o engrossamento das raízes (a partir do 8º mês).",
+    "materiais_iniciais": [
+      "Espaço de terra solta e profunda em quintal ou chácara",
+      "Pedaços de manivas de macaxeira mansa de boa procedência"
+    ],
+    "fases": [
+      {
+        "id": "pegamento",
+        "nome": "Brotação das Manivas",
+        "dias_inicio": 0,
+        "dias_fim": 60,
+        "tarefas": [
+          {
+            "titulo": "Rega inicial até enraizar",
+            "como_fazer": "Mantenha a terra fresca nas primeiras 3 semanas até os brotos verdes firmarem.",
+            "frequencia_dias": 3
+          }
+        ],
+        "o_que_observar": "Gemas laterais da maniva brotando e formando copas verdes."
+      },
+      {
+        "id": "engrossamento",
+        "nome": "Crescimento e Reserva da Raiz",
+        "dias_inicio": 61,
+        "dias_fim": 300,
+        "tarefas": [
+          {
+            "titulo": "Limpeza de mato e coroamento",
+            "como_fazer": "Mantenha a base livre de mato competidor e chegue um pouco de terra fofa ao redor do caule.",
+            "frequencia_dias": 30
+          }
+        ],
+        "o_que_observar": "Hastes lenhosas altas e rachaduras leves no solo ao redor da base."
+      }
+    ],
+    "pragas_comuns": [],
+    "fontes": [
+      "Embrapa Mandioca e Fruticultura"
+    ]
+  },
+  {
+    "id": "batata-doce",
+    "nome": "Batata-Doce Beauregard",
+    "categoria": "raiz",
+    "dificuldade": 2,
+    "dias_germinacao": [
+      7,
+      14
+    ],
+    "dias_ate_colheita": [
+      90,
+      120
+    ],
+    "temp_ideal_c": [
+      20,
+      32
+    ],
+    "temp_risco_c": {
+      "min": 14,
+      "max": 38
+    },
+    "sol_horas_min": 5,
+    "agua": "regular",
+    "espaco": {
+      "permite_vaso": true,
+      "vaso_litros_min": 25,
+      "espaco_m2_por_planta": 0.4,
+      "permite_apartamento": true
+    },
+    "meses_plantio_geral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "descricao_curta": "Excelente para vasos grandes ou canteiros. Folhas bonitas e raízes adocicadas e nutritivas.",
+    "dica_iniciante": "As ramas enraízam com facilidade na água ou na terra úmida.",
+    "ponto_de_colheita": "Folhagem começa a amarelar e as raízes alcançam tamanho adequado após 90 a 120 dias.",
+    "materiais_iniciais": [
+      "Vaso grande (25 a 30 litros) ou canteiro fofo com camalhão",
+      "Substrato leve e arenoso",
+      "Ramas ou batata-doce brotada"
+    ],
+    "fases": [
+      {
+        "id": "enraizamento",
+        "nome": "Propagação das Ramas",
+        "dias_inicio": 0,
+        "dias_fim": 30,
+        "tarefas": [
+          {
+            "titulo": "Rega regular da rama",
+            "como_fazer": "Mantenha o solo úmido até que as pontas das ramas comecem a soltar folhas novas ativamente.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Ramas firmes e se alongando pelo vaso ou canteiro."
+      },
+      {
+        "id": "engrossamento_raiz",
+        "nome": "Engrossamento das Tuberosas",
+        "dias_inicio": 31,
+        "dias_fim": 120,
+        "tarefas": [
+          {
+            "titulo": "Cobrir raízes expostas com terra",
+            "como_fazer": "Se alguma batata começar a apontar para fora da terra, cubra-a para não esverdear com o sol.",
+            "frequencia_dias": 15
+          }
+        ],
+        "o_que_observar": "Ramas exuberantes cobrindo a terra como forração."
+      }
+    ],
+    "pragas_comuns": [],
+    "fontes": [
+      "Embrapa Hortaliças"
+    ]
   }
 ]

@@ -74,7 +74,11 @@ function HomeConteudo() {
     atualizarPlantios(atualizados);
   };
 
-  const handleAdicionarNota = (plantioId: string, texto: string) => {
+  const handleAdicionarNota = (
+    plantioId: string,
+    texto: string,
+    fotoUrl?: string
+  ) => {
     const atualizados = plantios.map((p) => {
       if (p.id !== plantioId) return p;
       return {
@@ -84,6 +88,7 @@ function HomeConteudo() {
             id: `nota_${p.diario.length + 1}_${Date.now()}`,
             data: new Date().toISOString(),
             texto,
+            foto_url: fotoUrl,
           },
           ...p.diario,
         ],
