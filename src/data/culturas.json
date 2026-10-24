@@ -20,6 +20,73 @@
     "descricao_curta": "A folha mais fácil e rápida para quem está começando em vasos ou quintais.",
     "dica_iniciante": "Mantenha a terra sempre levemente úmida, como uma esponja espremida.",
     "ponto_de_colheita": "Colha as folhas externas quando estiverem bem formadas ou corte o pé inteiro.",
+    "materiais_iniciais": [
+      "Vaso ou jardineira de pelo menos 15 cm de profundidade",
+      "Substrato para hortaliças ou terra vegetal adubada",
+      "Sementes de alface crespa ou mudinhas já pegas",
+      "Borrifador de água para a fase inicial"
+    ],
+    "fases": [
+      {
+        "id": "semeadura",
+        "nome": "Semeadura e Germinação",
+        "dias_inicio": 0,
+        "dias_fim": 7,
+        "tarefas": [
+          {
+            "titulo": "Umedecer a terra com borrifador",
+            "como_fazer": "Borrife água suavemente pela manhã sem encharcar ou afundar as sementes.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Primeiros brotinhos verdes surgindo na terra após o 4º dia."
+      },
+      {
+        "id": "desenvolvimento",
+        "nome": "Crescimento das Folhas",
+        "dias_inicio": 8,
+        "dias_fim": 30,
+        "tarefas": [
+          {
+            "titulo": "Regar a base da planta",
+            "como_fazer": "Regue a terra ao redor, evitando molhar as folhas diretamente para não atrair fungos.",
+            "frequencia_dias": 1
+          },
+          {
+            "titulo": "Adubação leve de cobertura",
+            "como_fazer": "Coloque uma colher de húmus de minhoca ou adubo orgânico ao redor do pé.",
+            "frequencia_dias": 10
+          }
+        ],
+        "o_que_observar": "Folhas crescendo em formato de leque e ganhando textura ondulada."
+      },
+      {
+        "id": "colheita",
+        "nome": "Ponto de Colheita",
+        "dias_inicio": 31,
+        "dias_fim": 50,
+        "tarefas": [
+          {
+            "titulo": "Colher folhas de fora para dentro",
+            "como_fazer": "Corte com tesoura as folhas maiores externas; a planta continuará produzindo no centro.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Pé cheio e folhas crocantes antes do início da floração."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Lagartas minúsculas",
+        "sintomas": "Pequenos furos nas folhas mais novas.",
+        "solucao_caseira": "Catação manual pela manhã ou borrifar água com algumas gotas de sabão neutro."
+      },
+      {
+        "nome": "Pulgões",
+        "sintomas": "Pontinhos pretos ou verdes aglomerados na face de baixo das folhas.",
+        "solucao_caseira": "Borrife calda de fumo leve ou solução de água com 1 colher de chá de detergente neutro."
+      }
+    ],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -43,6 +110,73 @@
     "descricao_curta": "Frutinhas doces e produtivas, perfeitas para vasos grandes na varanda ou canteiro.",
     "dica_iniciante": "Precisa de uma estaquinha ou bambu para apoiar o caule conforme cresce.",
     "ponto_de_colheita": "Frutos totalmente vermelhos e soltando facilmente do cacho ao girar.",
+    "materiais_iniciais": [
+      "Vaso grande de 12 a 20 litros com boa drenagem no fundo",
+      "Substrato rico em matéria orgânica",
+      "Haste de bambu ou estaca de 1 metro para tutorar",
+      "Sementes de tomate-cereja ou muda forte"
+    ],
+    "fases": [
+      {
+        "id": "semeadura",
+        "nome": "Germinação da semente",
+        "dias_inicio": 0,
+        "dias_fim": 10,
+        "tarefas": [
+          {
+            "titulo": "Manter sementeira úmida",
+            "como_fazer": "Borrife água sem encharcar em local bem iluminado e protegido de vento forte.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Brotinho erguendo as duas primeiras folhinhas estreitas."
+      },
+      {
+        "id": "tutoramento",
+        "nome": "Crescimento e Amarração",
+        "dias_inicio": 11,
+        "dias_fim": 45,
+        "tarefas": [
+          {
+            "titulo": "Amarrar o caule principal na estaca",
+            "como_fazer": "Use um barbante frouxo para dar suporte sem estrangular o caule da planta.",
+            "frequencia_dias": 7
+          },
+          {
+            "titulo": "Regar fundo a cada 2 dias",
+            "como_fazer": "Molhe até começar a sair água pelos furos do fundo do vaso.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Formação de ramos laterais e primeiros cachos de flores amarelas."
+      },
+      {
+        "id": "frutificacao",
+        "nome": "Floração e Frutificação",
+        "dias_inicio": 46,
+        "dias_fim": 90,
+        "tarefas": [
+          {
+            "titulo": "Adubação rica em fósforo/potássio",
+            "como_fazer": "Adicione farinha de casca de ovo triturada e húmus na terra.",
+            "frequencia_dias": 15
+          },
+          {
+            "titulo": "Colheita dos tomatinhos vermelhos",
+            "como_fazer": "Gire delicadamente o fruto; se estiver maduro, ele se soltará na sua mão.",
+            "frequencia_dias": 3
+          }
+        ],
+        "o_que_observar": "Tomatinhos passando de verde brilhante para vermelho vivo."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Mosca-branca",
+        "sintomas": "Pequenas mosquinhas brancas voando ao sacudir a folhagem.",
+        "solucao_caseira": "Borrife óleo de neem diluído ao entardecer ou água com sabão de coco."
+      }
+    ],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -66,6 +200,53 @@
     "descricao_curta": "Erva aromática clássica do Brasil, adora calor e vai muito bem em jardineiras.",
     "dica_iniciante": "Aperte levemente as sementes antes de plantar para quebrar a casquinha externa.",
     "ponto_de_colheita": "Corte os talos pela base quando as folhas estiverem viçosas antes de florir.",
+    "materiais_iniciais": [
+      "Jardineira ou vaso de 2 a 5 litros",
+      "Substrato leve e bem drenado",
+      "Envelope de sementes de coentro Verdão"
+    ],
+    "fases": [
+      {
+        "id": "germinacao",
+        "nome": "Germinação do Coentro",
+        "dias_inicio": 0,
+        "dias_fim": 14,
+        "tarefas": [
+          {
+            "titulo": "Borrife água diariamente",
+            "como_fazer": "Mantenha a superfície da terra úmida até que todos os brotos despontem.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Brotinhos pontiagudos saindo da terra com perfume sutil de coentro."
+      },
+      {
+        "id": "crescimento",
+        "nome": "Desenvolvimento e Colheita",
+        "dias_inicio": 15,
+        "dias_fim": 45,
+        "tarefas": [
+          {
+            "titulo": "Rega moderada",
+            "como_fazer": "Regue pela manhã logo cedo para aguentar o calor do dia.",
+            "frequencia_dias": 1
+          },
+          {
+            "titulo": "Colher ramos externos",
+            "como_fazer": "Corte ramos com tesoura a 2 cm do solo para usar na cozinha.",
+            "frequencia_dias": 2
+          }
+        ],
+        "o_que_observar": "Moita densa com folhas verdes e muito cheiroas."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Pulgões nas pontas",
+        "sintomas": "Folhas enrugando na ponta dos galhos.",
+        "solucao_caseira": "Lave com jato suave de água ou borrife chá de cavalinha/alho."
+      }
+    ],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -89,6 +270,48 @@
     "descricao_curta": "Super resistente e brota de novo sempre que você corta para cozinhar.",
     "dica_iniciante": "Corte as folhas deixando cerca de 3 cm da base para rebrotar continuamente.",
     "ponto_de_colheita": "Folhas cilíndricas com pelo menos 15 a 20 cm de altura.",
+    "materiais_iniciais": [
+      "Vaso de 3 a 5 litros",
+      "Substrato fértil e fofo",
+      "Mudinhas ou touceiras de cebolinha com raiz"
+    ],
+    "fases": [
+      {
+        "id": "pegamento",
+        "nome": "Enraizamento",
+        "dias_inicio": 0,
+        "dias_fim": 15,
+        "tarefas": [
+          {
+            "titulo": "Rega diária na base",
+            "como_fazer": "Molhe bem para a raiz assentar na nova terra.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Folhas ficando eretas e firmes."
+      },
+      {
+        "id": "rebrota",
+        "nome": "Ciclo Contínuo de Rebrota",
+        "dias_inicio": 16,
+        "dias_fim": 70,
+        "tarefas": [
+          {
+            "titulo": "Cortar e adubar",
+            "como_fazer": "Corte as hastes maiores e adicione uma pitada de composto orgânico ao redor.",
+            "frequencia_dias": 7
+          }
+        ],
+        "o_que_observar": "Novos tubos verdes nascendo do centro da touceira."
+      }
+    ],
+    "pragas_comuns": [
+      {
+        "nome": "Tripes",
+        "sintomas": "Manchas prateadas ao longo dos tubos da cebolinha.",
+        "solucao_caseira": "Limpeza com pano úmido e aspersão de sabão neutro vegetal."
+      }
+    ],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -112,6 +335,28 @@
     "descricao_curta": "A raiz mais rápida do jardim: você planta hoje e come em menos de um mês.",
     "dica_iniciante": "Não demore a colher, senão a raiz fica fibrosa e oca.",
     "ponto_de_colheita": "Quando o 'ombro' rosado da raiz começar a despontar da terra (2 a 3 cm de diâmetro).",
+    "materiais_iniciais": [
+      "Vaso ou floreira com profundidade mínima de 15 cm",
+      "Terra fofa sem pedras ou torrões",
+      "Sementes de rabanete Redondo Vermelho"
+    ],
+    "fases": [
+      {
+        "id": "crescimento_rapido",
+        "nome": "Engrossamento da Raiz",
+        "dias_inicio": 0,
+        "dias_fim": 25,
+        "tarefas": [
+          {
+            "titulo": "Rega sem falha",
+            "como_fazer": "Falta de água faz o rabanete ficar excessivamente picante e duro. Regue todo dia.",
+            "frequencia_dias": 1
+          }
+        ],
+        "o_que_observar": "Base do caule inchando e ficando cor-de-rosa."
+      }
+    ],
+    "pragas_comuns": [],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -135,6 +380,28 @@
     "descricao_curta": "Aroma maravilhoso para molhos e massas. Ama sol e calor.",
     "dica_iniciante": "Pode a pontinha dos galhos regularmente para o pé ficar bem cheio e arbustivo.",
     "ponto_de_colheita": "Colha ramos de cima para baixo antes da planta produzir flores.",
+    "materiais_iniciais": [
+      "Vaso de 5 litros com furos de drenagem",
+      "Terra adubada com matéria orgânica",
+      "Muda ou sementes de manjericão Italiano"
+    ],
+    "fases": [
+      {
+        "id": "arbusto",
+        "nome": "Formação do Arbusto",
+        "dias_inicio": 0,
+        "dias_fim": 60,
+        "tarefas": [
+          {
+            "titulo": "Podar pontas de floração",
+            "como_fazer": "Corte pequenos botões de flores que aparecerem para manter as folhas doces.",
+            "frequencia_dias": 5
+          }
+        ],
+        "o_que_observar": "Planta se ramificando lateralmente."
+      }
+    ],
+    "pragas_comuns": [],
     "fontes": ["Embrapa Hortaliças"]
   },
   {
@@ -157,6 +424,27 @@
     "descricao_curta": "Resistente ao calor e à seca, perfeito para quintais e canteiros no Nordeste e Centro-Oeste.",
     "dica_iniciante": "Fixa nitrogênio na terra, deixando o solo mais fértil para os próximos plantios.",
     "ponto_de_colheita": "Vagens cheias e firmes para consumo verde, ou secas no pé para guardar grão.",
+    "materiais_iniciais": [
+      "Canteiro ou área de terra com pelo menos 1 m²",
+      "Sementes selecionadas de feijão-macassar ou caupi"
+    ],
+    "fases": [
+      {
+        "id": "enraizamento",
+        "nome": "Crescimento Rústico",
+        "dias_inicio": 0,
+        "dias_fim": 80,
+        "tarefas": [
+          {
+            "titulo": "Rega espaçada",
+            "como_fazer": "Regue apenas 2 a 3 vezes por semana; o feijão-de-corda detesta solo encharcado.",
+            "frequencia_dias": 3
+          }
+        ],
+        "o_que_observar": "Vagens longas se formando a partir das flores."
+      }
+    ],
+    "pragas_comuns": [],
     "fontes": ["Embrapa Semiárido", "Embrapa Hortaliças"]
   },
   {
@@ -180,6 +468,28 @@
     "descricao_curta": "Raiz adocicada e nutritiva. Exige solo fofo e sem pedrinhas para crescer reta.",
     "dica_iniciante": "Em vasos, escolha um recipiente fundo com pelo menos 25 a 30 cm de profundidade.",
     "ponto_de_colheita": "Folhagem externa começa a tombar e o topo da raiz tem cerca de 2 a 3 cm de largura.",
+    "materiais_iniciais": [
+      "Vaso fundo com pelo menos 30 cm de altura",
+      "Substrato arenoso e muito fofo",
+      "Sementes de cenoura Brasília ou Nantes"
+    ],
+    "fases": [
+      {
+        "id": "desbaste",
+        "nome": "Desbaste e Engrossamento",
+        "dias_inicio": 0,
+        "dias_fim": 100,
+        "tarefas": [
+          {
+            "titulo": "Desbaste das mudinhas",
+            "como_fazer": "Retire as plantas que nasceram coladas, deixando 5 cm de distância entre cada uma.",
+            "frequencia_dias": 20
+          }
+        ],
+        "o_que_observar": "Folhagem verde densa como uma renda."
+      }
+    ],
+    "pragas_comuns": [],
     "fontes": ["Embrapa Hortaliças"]
   }
 ]

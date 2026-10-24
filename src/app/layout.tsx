@@ -1,9 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Plantio Fácil",
-  description: "Guia de plantio inteligente para iniciantes do zero até a colheita",
+  title: "Plantio Fácil — Guia de plantio para iniciantes",
+  description: "Diga onde você está e quanto espaço tem. A gente diz o que plantar e te guia até colher.",
+  applicationName: "Plantio Fácil",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Plantio Fácil",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#244227",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -13,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-[#fcfbfa]">{children}</body>
     </html>
   );
 }

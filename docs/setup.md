@@ -48,16 +48,24 @@ Todos os 9 arquivos do manifesto oficial do toolkit foram preenchidos com dados 
 
 | Item | Estado | Evidência observada |
 |---|---|---|
-| `npm run lint` | Validado | Executou `eslint .` com 0 erros e 0 avisos. |
-| `npm run typecheck` | Validado | `next typegen && tsc --noEmit` completou com sucesso; tipos de rotas gerados. |
-| `npm run lint:typed` | Validado | `eslint --config eslint.typed.config.mjs .` executou com 0 erros. |
+| `npm run lint` | Validado | Executou `eslint .` com 0 erros e 0 avisos em todos os componentes e páginas. |
+| `npm run typecheck` | Validado | `next typegen && tsc --noEmit` completou com sucesso; rotas estáticas e dinâmicas tipadas. |
+| `npm run lint:typed` | Validado | `eslint --config eslint.typed.config.mjs .` executou com 0 erros em promises assíncronas. |
 | `npm run lint:rules` | Validado | `verify-quality-rules.mjs` confirmou: `max-lines: ok`, `no-direct-console: ok`, `no-direct-data-access: ok`. |
-| `npm test` | Validado | 3 arquivos de teste e 8 testes aprovados no Vitest (`env.test.ts`, `logger.test.ts`, `db/index.test.ts`). |
-| `npm run build` | Validado | Next.js 16.4.3 compilou com sucesso em 841ms e gerou 4 páginas estáticas. |
-| `npm run db:generate` | Validado | Drizzle Kit leu `drizzle.config.ts`, detectou 0 alterações e finalizou com código 0. |
+| `npm test` | Validado | 7 arquivos de teste e 20 testes aprovados no Vitest (recomendação, clima, plantios, rotas de API, env, logger e db). |
+| `npm run build` | Validado | Next.js 16 compilou com sucesso todas as 7 rotas (/api/clima, /api/recomendar, /cultura/[id], /, /manifest.webmanifest). |
+| `npm run db:generate` | Validado | Drizzle Kit validou a integridade de schema sem pendências. |
 | `npm run check` | Validado | Pipeline completa encadeada executou e finalizou com código de saída 0. |
 
-## Trabalho pendente e próxima entrega
+## Funcionalidades do MVP Concluídas
+
+- **Recomendação Agronômica Determinística:** Baseada em regras do clima, época, espaço e horas de sol.
+- **Geocodificação e Clima via Open-Meteo:** Busca de cidades brasileiras e temperatura local em tempo real sem chave de API.
+- **Guia Detalhado da Cultura (`/cultura/[id]`):** Lista de compras de materiais, linha do tempo das fases com tarefas práticas e manejo de pragas caseiras.
+- **Aba "Hoje":** Checklist de rotinas com marcação de tarefas concluídas e barra de progresso.
+- **Aba "Minhas Plantas":** Acompanhamento de dias de cultivo, fase atual e diário de notas.
+- **Aba "Assistente":** Chat com perguntas frequentes e respostas curadas para iniciantes.
+- **PWA / Suporte Offline:** Web App Manifest configurado para instalação na tela inicial de smartphones.
 
 - **Próxima entrega MVP:** Criação do módulo de dados curados de culturas (`src/data/culturas.json`) e implementação do motor de recomendação baseado nas normais climatológicas e regras agronômicas descritas no [PRODUCT.md](../PRODUCT.md).
 - **Decisões externas pendentes:** Seleção do provedor do modelo de IA (Gemma via Ollama local ou endpoint de API) e credenciais de banco PostgreSQL quando a persistência for iniciada.

@@ -22,6 +22,27 @@ export const StatusRecomendacaoSchema = z.enum([
   "nao_recomendado",
 ]);
 
+export const TarefaFaseSchema = z.object({
+  titulo: z.string(),
+  como_fazer: z.string(),
+  frequencia_dias: z.number().int().min(1),
+});
+
+export const FaseCulturaSchema = z.object({
+  id: z.string(),
+  nome: z.string(),
+  dias_inicio: z.number().int().min(0),
+  dias_fim: z.number().int().min(1),
+  tarefas: z.array(TarefaFaseSchema),
+  o_que_observar: z.string(),
+});
+
+export const PragaCulturaSchema = z.object({
+  nome: z.string(),
+  sintomas: z.string(),
+  solucao_caseira: z.string(),
+});
+
 export const CulturaSchema = z.object({
   id: z.string(),
   nome: z.string(),
@@ -46,6 +67,9 @@ export const CulturaSchema = z.object({
   descricao_curta: z.string(),
   dica_iniciante: z.string(),
   ponto_de_colheita: z.string(),
+  materiais_iniciais: z.array(z.string()).default([]),
+  fases: z.array(FaseCulturaSchema).default([]),
+  pragas_comuns: z.array(PragaCulturaSchema).default([]),
   fontes: z.array(z.string()),
 });
 
@@ -68,6 +92,9 @@ export const ItemRecomendadoSchema = z.object({
 export type CategoriaCultura = z.infer<typeof CategoriaCulturaSchema>;
 export type TipoEspaco = z.infer<typeof TipoEspacoSchema>;
 export type StatusRecomendacao = z.infer<typeof StatusRecomendacaoSchema>;
+export type TarefaFase = z.infer<typeof TarefaFaseSchema>;
+export type FaseCultura = z.infer<typeof FaseCulturaSchema>;
+export type PragaCultura = z.infer<typeof PragaCulturaSchema>;
 export type Cultura = z.infer<typeof CulturaSchema>;
 export type InputRecomendacao = z.infer<typeof InputRecomendacaoSchema>;
 export type ItemRecomendado = z.infer<typeof ItemRecomendadoSchema>;
