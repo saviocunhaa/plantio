@@ -6,6 +6,8 @@ import { AbaAssistente } from "@/components/AbaAssistente";
 import { AbaHoje } from "@/components/AbaHoje";
 import { AbaPlantar } from "@/components/AbaPlantar";
 import { AbaPlantios } from "@/components/AbaPlantios";
+import { ModalDiagnosticoVisual } from "@/components/ModalDiagnosticoVisual";
+import { OnboardingModal } from "@/components/OnboardingModal";
 import culturasData from "@/data/culturas.json";
 import {
   carregarPlantiosStorage,
@@ -13,7 +15,7 @@ import {
 } from "@/lib/plantios/service";
 import { PlantioAtivo } from "@/lib/plantios/types";
 import { gerarRecomendacoes } from "@/lib/recommendation/engine";
-import { Cultura, InputRecomendacao } from "@/lib/recommendation/types";
+import { Cultura, InputRecomendacao, TipoEspaco } from "@/lib/recommendation/types";
 import { LocalizacaoCidade } from "@/lib/weather/types";
 
 const culturas = culturasData as Cultura[];
@@ -44,6 +46,15 @@ function HomeConteudo() {
   });
 
   const [cidadeNome, setCidadeNome] = useState<string | undefined>();
+  const [climaAtual, setClimaAtual] = useState<{ temperatura_c: number; chuva_mm: number } | undefined>();
+  const [diagnosticoAberto, setDiagnosticoAberto] = useState(false);
+  const [onboardingAberto, setOnboardingAberto] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      localStorage.getItem("plantio_onboarding_concluido") !== "true" &&
+      carregarPlantiosStorage().length === 0
+    );
+  });
 
   const mesAtual = new Date().getMonth() + 1;
   const [input, setInput] = useState<InputRecomendacao>({
@@ -106,6 +117,50 @@ function HomeConteudo() {
 
   const handleSelecionarCidade = (cidade: LocalizacaoCidade) => {
     setCidadeNome(cidade.estado ? `${cidade.nome}, ${cidade.estado}` : cidade.nome);
+    void (async () => {
+      try {
+        const res = await fetch(`/api/clima?lat=${cidade.latitude}&lon=${cidade.longitude}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.clima) {
+            setClimaAtual({
+              temperatura_c: data.clima.temperatura_c,
+              chuva_mm: data.clima.chuva_mm || 0,
+            });
+            setInput((prev) => ({
+              ...prev,
+              temperatura_media_c: data.clima.temperatura_c,
+            }));
+          }
+        }
+      } catch {
+        // Silencioso
+      }
+    })();
+  };
+
+  const handleConcluirOnboarding = (dados: {
+    espaco: TipoEspaco;
+    sol_horas: number;
+    tem_agua_facil: boolean;
+    cidade?: LocalizacaoCidade;
+  }) => {
+    setInput((prev) => ({
+      ...prev,
+      tipo_espaco: dados.espaco,
+      sol_horas: dados.sol_horas,
+      tem_agua_facil: dados.tem_agua_facil,
+    }));
+
+    if (dados.cidade) {
+      handleSelecionarCidade(dados.cidade);
+    }
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("plantio_onboarding_concluido", "true");
+    }
+    setOnboardingAberto(false);
+    setAbaAtiva("plantar");
   };
 
   const recomendacoes = gerarRecomendacoes(culturas, input);
@@ -113,22 +168,32 @@ function HomeConteudo() {
   return (
     <div className="min-h-screen bg-[#fcfbfa] text-[#1f291e] flex flex-col pb-24">
       {/* Cabeçalho */}
-      <header className="bg-[#244227] text-white py-5 px-4 shadow-sm sticky top-0 z-20">
+      <header className="bg-[#244227] text-white py-4 px-4 shadow-sm sticky top-0 z-20">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl" role="img" aria-label="Planta">
               🌱
             </span>
             <div>
-              <h1 className="text-xl font-bold tracking-tight">Plantio Fácil</h1>
-              <p className="text-xs text-[#d4e4d5]">Do zero até a colheita no seu espaço</p>
+              <h1 className="text-lg sm:text-xl font-bold tracking-tight">Plantio Fácil</h1>
+              <p className="text-[11px] text-[#d4e4d5]">Do zero até a colheita no seu espaço</p>
             </div>
           </div>
-          {cidadeNome && (
-            <span className="text-xs bg-[#1a301c] px-3 py-1 rounded-full text-[#d4e4d5]">
-              📍 {cidadeNome}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {cidadeNome && (
+              <span className="text-[11px] bg-[#1a301c] px-2.5 py-1 rounded-full text-[#d4e4d5] hidden sm:inline">
+                📍 {cidadeNome}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => setOnboardingAberto(true)}
+              className="text-xs bg-[#1a301c] hover:bg-[#132415] px-2.5 py-1.5 rounded-xl text-[#c7dfc9] font-medium flex items-center gap-1 transition-colors"
+            >
+              <span>⚙️</span>
+              <span>Meu Espaço</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -140,6 +205,9 @@ function HomeConteudo() {
             culturas={culturas}
             onAlternarTarefa={handleAlternarTarefa}
             onIrParaPlantar={() => setAbaAtiva("plantar")}
+            onAbrirDiagnostico={() => setDiagnosticoAberto(true)}
+            clima={climaAtual}
+            cidadeNome={cidadeNome}
           />
         )}
 
@@ -165,9 +233,26 @@ function HomeConteudo() {
         )}
 
         {abaAtiva === "assistente" && (
-          <AbaAssistente plantios={plantios} />
+          <AbaAssistente
+            plantios={plantios}
+            onAbrirDiagnostico={() => setDiagnosticoAberto(true)}
+          />
         )}
       </main>
+
+      {/* Modais inovadores */}
+      <OnboardingModal
+        aberto={onboardingAberto}
+        onConcluir={handleConcluirOnboarding}
+        onFechar={() => setOnboardingAberto(false)}
+      />
+
+      <ModalDiagnosticoVisual
+        aberto={diagnosticoAberto}
+        onFechar={() => setDiagnosticoAberto(false)}
+        plantiosAtivos={plantios.filter((p) => p.status === "ativo")}
+        onAdicionarAoDiario={handleAdicionarNota}
+      />
 
       {/* Navegação Inferior Fixa */}
       <nav

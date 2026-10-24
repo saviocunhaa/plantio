@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Cultura } from "@/lib/recommendation/types";
 import { gerarTarefasHoje, TarefaHoje } from "@/lib/plantios/service";
 import { PlantioAtivo } from "@/lib/plantios/types";
@@ -9,6 +10,13 @@ interface AbaHojeProps {
   culturas: Cultura[];
   onAlternarTarefa: (tarefaId: string, plantioId: string) => void;
   onIrParaPlantar: () => void;
+  onAbrirDiagnostico?: () => void;
+  clima?: {
+    temperatura_c: number;
+    chuva_mm: number;
+    descricao?: string;
+  };
+  cidadeNome?: string;
 }
 
 export function AbaHoje({
@@ -16,11 +24,33 @@ export function AbaHoje({
   culturas,
   onAlternarTarefa,
   onIrParaPlantar,
+  onAbrirDiagnostico,
+  clima,
+  cidadeNome,
 }: AbaHojeProps) {
   const tarefas = gerarTarefasHoje(plantios, culturas);
   const totalTarefas = tarefas.length;
   const concluidas = tarefas.filter((t) => t.concluida).length;
   const plantiosAtivos = plantios.filter((p) => p.status === "ativo");
+
+  const [lembretesAtivos, setLembretesAtivos] = useState<boolean>(() => {
+    if (typeof window === "undefined" || !("Notification" in window)) return false;
+    return Notification.permission === "granted";
+  });
+
+  const handleAtivarLembretes = async () => {
+    if (typeof window === "undefined" || !("Notification" in window)) {
+      alert("Seu navegador não tem suporte a notificações web.");
+      return;
+    }
+    const permissao = await Notification.requestPermission();
+    if (permissao === "granted") {
+      setLembretesAtivos(true);
+      new Notification("🌱 Plantio Fácil", {
+        body: "Lembretes ativados com sucesso! Avisaremos sobre as tarefas do seu cultivo.",
+      });
+    }
+  };
 
   if (plantiosAtivos.length === 0) {
     return (
@@ -44,8 +74,11 @@ export function AbaHoje({
     );
   }
 
+  const vaiChover = clima && clima.chuva_mm >= 3;
+  const calorIntenso = clima && clima.temperatura_c >= 32;
+
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* Resumo do dia */}
       <div className="bg-[#244227] text-white rounded-2xl p-5 shadow-xs">
         <div className="flex items-center justify-between">
@@ -54,6 +87,11 @@ export function AbaHoje({
               Rotina de Hoje
             </span>
             <h2 className="text-xl font-bold mt-0.5">O que fazer hoje</h2>
+            {cidadeNome && (
+              <p className="text-[11px] text-[#c7dfc9] mt-0.5">
+                📍 {cidadeNome} {clima ? `• ${clima.temperatura_c}°C` : ""}
+              </p>
+            )}
           </div>
           <div className="text-right">
             <span className="text-2xl font-bold">{concluidas}/{totalTarefas}</span>
@@ -73,7 +111,67 @@ export function AbaHoje({
         )}
       </div>
 
-      {/* Lista de tarefas */}
+      {/* Alerta Climático Inteligente de Rega */}
+      {vaiChover && (
+        <div className="bg-[#ebf4fa] border border-[#bcdbf1] rounded-2xl p-4 flex items-start gap-3">
+          <span className="text-2xl">🌧️</span>
+          <div className="text-xs space-y-1">
+            <strong className="text-[#1a4a6e] block text-sm">
+              Alerta de Chuva Hoje ({clima.chuva_mm} mm previstos)
+            </strong>
+            <p className="text-[#2b587a]">
+              A previsão indica chuva para sua região! Se suas plantas estiverem expostas ao ar livre,
+              você pode pular a rega de hoje para economizar água e não encharcar as raízes.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {calorIntenso && !vaiChover && (
+        <div className="bg-[#fff9eb] border border-[#f7e0a3] rounded-2xl p-4 flex items-start gap-3">
+          <span className="text-2xl">☀️</span>
+          <div className="text-xs space-y-1">
+            <strong className="text-[#875a12] block text-sm">
+              Alerta de Calor Forte ({clima.temperatura_c}°C)
+            </strong>
+            <p className="text-[#6e490e]">
+              Dia quente! Evite molhar as folhas no sol forte para não queimá-las. Faça as regas
+              direto na terra no final da tarde ou bem cedo pela manhã.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Atalhos rápidos: Lembretes e Diagnóstico */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => void handleAtivarLembretes()}
+          className={`p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all ${
+            lembretesAtivos
+              ? "bg-[#eef5ee] border-[#cbe1ce] text-[#1e3d22]"
+              : "bg-white border-[#cfc8bf] text-[#3b3a37] hover:bg-[#f7f5f2]"
+          }`}
+        >
+          <span>🔔</span>
+          <span className="truncate">
+            {lembretesAtivos ? "Lembretes Ativos" : "Ativar Lembretes"}
+          </span>
+        </button>
+
+        {onAbrirDiagnostico && (
+          <button
+            type="button"
+            onClick={onAbrirDiagnostico}
+            className="p-3 rounded-xl border border-[#cfc8bf] bg-white text-[#3b3a37] hover:bg-[#f7f5f2] text-xs font-semibold flex items-center gap-2 transition-all"
+          >
+            <span>🔍</span>
+            <span className="truncate">Diagnóstico Foliar</span>
+          </button>
+        )}
+      </div>
+
+      {/* Lista de tarefas do dia */}
       <div className="space-y-3">
         {tarefas.length === 0 ? (
           <div className="bg-white rounded-xl p-5 border border-[#e8e4df] text-center text-sm text-[#57544f]">

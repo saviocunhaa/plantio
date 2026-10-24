@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CalculadoraPlantio } from "@/components/CalculadoraPlantio";
 import culturasData from "@/data/culturas.json";
 import { Cultura } from "@/lib/recommendation/types";
 import { DetalheCulturaCliente } from "./DetalheCulturaCliente";
@@ -95,6 +96,9 @@ export default async function PaginaCultura({
             </ul>
           </section>
         )}
+
+        {/* Calculadora de Espaço e Quantidade */}
+        <CalculadoraPlantio cultura={cultura} />
 
         {/* Linha do Tempo das Fases do Cultivo */}
         {cultura.fases.length > 0 && (

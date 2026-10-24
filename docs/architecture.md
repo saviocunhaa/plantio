@@ -48,6 +48,13 @@ plantio/
 │       ├── assistant/         # Motor de IA (Gemma 4 via Ollama + fallback Embrapa)
 │       │   ├── engine.ts      # Integração Ollama e regras agronômicas
 │       │   └── types.ts       # Schemas Zod de entrada e resposta
+│       ├── calculator/        # Calculadora de mudas, terra e economia
+│       │   ├── engine.ts      # Regras de espaçamento e volumetria
+│       │   └── engine.test.ts # Testes unitários de cálculo
+│       ├── diagnostic/        # Diagnóstico visual foliar e pragas
+│       │   ├── engine.ts      # Mapeamento de sintomas para soluções caseiras
+│       │   ├── engine.test.ts # Testes de diagnóstico foliar
+│       │   └── types.ts       # Schemas de sintomas e resultados
 │       ├── env.ts             # Leitor tipado de variáveis de ambiente
 │       ├── env.test.ts        # Testes de integridade de ambiente
 │       ├── env-schema.ts      # Definição dos schemas Zod de variáveis
@@ -89,3 +96,5 @@ plantio/
 | **Fonte do sistema nativa** | Elimina requisições externas para Google Fonts em tempo de build e garante compatibilidade offline total para PWA em dispositivos móveis. | `next/font/google` (Geist) | Adotada |
 | **Drizzle ORM** | Tipagem estrita ponta a ponta sem overhead de query engine pesada, SQL previsível e portabilidade. | Prisma / Supabase SDK direto | Adotada |
 | **Assistente Híbrido (Gemma + Fallback)** | Consulta local ao Ollama com timeout de 2.5s e chaveamento automático para base agronômica Embrapa sem quebrar a experiência do usuário. | Chamada bloqueante a API externa de IA paga | Adotada |
+| **Diagnóstico Foliar e Calculadora de Mudas** | Módulos puros em TypeScript com regras determinísticas Embrapa para cálculo de espaçamento, terra e receitas caseiras sem pesticidas. | Dependência de visão computacional em nuvem | Adotada |
+| **Onboarding Wizard Interativo** | Fluxo guiado em 3 passos salvando preferências no localStorage e permitindo reabertura a qualquer momento via botão "Meu Espaço". | Formulário único estático | Adotada |

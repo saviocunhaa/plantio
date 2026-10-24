@@ -13,6 +13,7 @@ interface MensagemChat {
 
 interface AbaAssistenteProps {
   plantios?: PlantioAtivo[];
+  onAbrirDiagnostico?: () => void;
 }
 
 let contadorMensagens = 0;
@@ -21,7 +22,10 @@ function gerarIdMensagem(prefixo: string): string {
   return `${prefixo}-${contadorMensagens}`;
 }
 
-export function AbaAssistente({ plantios = [] }: AbaAssistenteProps) {
+export function AbaAssistente({
+  plantios = [],
+  onAbrirDiagnostico,
+}: AbaAssistenteProps) {
   const plantiosAtivos = plantios.filter((p) => p.status === "ativo");
   const primeiroAtivo = plantiosAtivos[0];
   const culturasNomes = plantiosAtivos.map((p) => p.cultura_nome).join(", ");
@@ -133,8 +137,18 @@ export function AbaAssistente({ plantios = [] }: AbaAssistenteProps) {
         </p>
       </div>
 
-      {/* Sugestões rápidas */}
+      {/* Sugestões rápidas e Diagnóstico */}
       <div className="flex gap-2 overflow-x-auto pb-1 text-xs">
+        {onAbrirDiagnostico && (
+          <button
+            type="button"
+            onClick={onAbrirDiagnostico}
+            className="px-3 py-2 rounded-full bg-[#244227] text-white font-semibold whitespace-nowrap hover:bg-[#1a301c] transition-colors shrink-0 flex items-center gap-1.5 shadow-2xs"
+          >
+            <span>🔍</span>
+            <span>Diagnosticar Folha</span>
+          </button>
+        )}
         {perguntasSugeridas.map((p) => (
           <button
             key={p}
