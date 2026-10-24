@@ -19,7 +19,7 @@ O **Plantio Fácil** resolve isso com uma promessa direta: *"Diga onde você est
 ## Fluxos da versão inicial (MVP)
 
 1. **Onboarding e identificação do espaço:**
-   - Entrada: localização (GPS do navegador ou busca por cidade), tipo/tamanho do espaço (vaso, quintal, terreno), horas de sol diárias e disponibilidade de água.
+   - Entrada: localização automática (GPS do navegador com fallback para IP/Internet) ou busca manual por cidade, tipo/tamanho do espaço (vaso, quintal, terreno), horas de sol diárias e disponibilidade de água.
    - Ação: sistema analisa o clima do mês (normais climatológicas / ZARC / temperatura e precipitação) e cruza com a base de dados agronômicos curada.
    - Resultado: apresentação de culturas recomendadas ("Ideal agora", "Dá para plantar", "Espere o mês X").
 

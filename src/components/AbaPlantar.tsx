@@ -1,15 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useId, useState } from "react";
 import {
   Cultura,
   InputRecomendacao,
   ItemRecomendado,
-  StatusRecomendacao,
   TipoEspaco,
 } from "@/lib/recommendation/types";
 import { LocalizacaoCidade } from "@/lib/weather/types";
+import { CardCulturaResumo } from "./CardCulturaResumo";
 
 interface AbaPlantarProps {
   culturas: Cultura[];
@@ -78,6 +77,73 @@ export function AbaPlantar({
     }
   };
 
+  const handleDetectarLocalizacao = () => {
+    setBuscando(true);
+
+    const obterPorIP = async () => {
+      try {
+        const res = await fetch("/api/clima?auto=ip");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.localizacao) {
+            onSelecionarCidade(data.localizacao);
+            if (data.clima?.temperatura_c) {
+              onInputChange({
+                ...input,
+                temperatura_media_c: data.clima.temperatura_c,
+              });
+            }
+          }
+        }
+      } finally {
+        setBuscando(false);
+      }
+    };
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          void (async () => {
+            const { latitude, longitude } = pos.coords;
+            try {
+              const res = await fetch(`/api/clima?lat=${latitude}&lon=${longitude}`);
+              if (res.ok) {
+                const data = await res.json();
+                if (data.cidade) {
+                  onSelecionarCidade({
+                    nome: data.cidade.nome,
+                    estado: data.cidade.estado,
+                    latitude,
+                    longitude,
+                    pais: "Brasil",
+                  });
+                }
+                if (data.clima?.temperatura_c) {
+                  onInputChange({
+                    ...input,
+                    temperatura_media_c: data.clima.temperatura_c,
+                  });
+                }
+              } else {
+                await obterPorIP();
+              }
+            } catch {
+              await obterPorIP();
+            } finally {
+              setBuscando(false);
+            }
+          })();
+        },
+        () => {
+          void obterPorIP();
+        },
+        { timeout: 7000 }
+      );
+    } else {
+      void obterPorIP();
+    }
+  };
+
   const filtradas = recomendacoes.filter((item) => {
     if (filtroStatus === "todos") return true;
     return item.status === filtroStatus;
@@ -85,16 +151,33 @@ export function AbaPlantar({
 
   return (
     <div className="space-y-6">
-      {/* Seção de Localização e Clima */}
+      {/* Seção de Localização e Clima com GPS / Internet */}
       <section className="bg-white rounded-2xl p-5 border border-[#e8e4df] shadow-xs space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold text-[#1f291e]">
             {cidadeSelecionada ? `📍 Clima em ${cidadeSelecionada}` : "📍 Onde você está?"}
           </h2>
           <span className="text-xs font-semibold text-[#244227] bg-[#eef5ee] px-2.5 py-1 rounded-full">
-            {buscando ? "Consultando clima..." : `${input.temperatura_media_c}°C estimados`}
+            {buscando ? "Consultando..." : `${input.temperatura_media_c}°C estimados`}
           </span>
         </div>
+
+        {/* Botão de Localização Automática (GPS ou Internet) */}
+        <button
+          type="button"
+          onClick={() => {
+            handleDetectarLocalizacao();
+          }}
+          disabled={buscando}
+          className="w-full h-11 px-4 rounded-xl border border-[#244227] text-[#244227] bg-[#f4f8f4] hover:bg-[#e7f0e7] text-xs font-bold transition-colors flex items-center justify-center gap-2"
+        >
+          <span>📍</span>
+          <span>
+            {buscando
+              ? "Detectando localização e clima..."
+              : "Usar minha localização atual (GPS / Internet)"}
+          </span>
+        </button>
 
         <div className="relative">
           <label htmlFor={buscaId} className="sr-only">
@@ -107,7 +190,7 @@ export function AbaPlantar({
             onChange={(e) => {
               void handleBuscarCidade(e.target.value);
             }}
-            placeholder="Digite sua cidade (ex: Juazeiro do Norte, São Paulo)..."
+            placeholder="Ou digite o nome da cidade (ex: Juazeiro do Norte)..."
             className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#cfc8bf] bg-white outline-hidden focus:ring-2 focus:ring-[#244227]"
           />
 
@@ -249,66 +332,5 @@ export function AbaPlantar({
         ))}
       </div>
     </div>
-  );
-}
-
-function CardCulturaResumo({ item }: { item: ItemRecomendado }) {
-  const { cultura, status, motivos, avisos } = item;
-
-  const badges: Record<StatusRecomendacao, { bg: string; text: string; label: string }> = {
-    ideal_agora: { bg: "bg-[#244227]", text: "text-white", label: "🌟 Ideal agora" },
-    possivel: { bg: "bg-[#8f6d28]", text: "text-white", label: "🌱 Dá para plantar" },
-    esperar: { bg: "bg-[#6b6762]", text: "text-white", label: "⏳ Melhor esperar" },
-    nao_recomendado: { bg: "bg-[#8c2b2b]", text: "text-white", label: "⚠️ Não recomendado" },
-  };
-
-  const badge = badges[status];
-
-  return (
-    <article className="bg-white rounded-2xl p-5 border border-[#e8e4df] shadow-xs space-y-3">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <span className="text-[11px] uppercase tracking-wider font-semibold text-[#66635e]">
-            {cultura.categoria}
-          </span>
-          <h3 className="text-xl font-bold text-[#1f291e]">{cultura.nome}</h3>
-        </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.text}`}>
-          {badge.label}
-        </span>
-      </div>
-
-      <p className="text-sm text-[#474542]">{cultura.descricao_curta}</p>
-
-      <div className="grid grid-cols-3 gap-2 py-2 border-y border-[#f0ede8] text-center text-xs">
-        <div>
-          <span className="block text-[#7a7772]">Dificuldade</span>
-          <span className="font-semibold text-[#1f291e]">
-            {cultura.dificuldade === 1 ? "Muito fácil" : cultura.dificuldade === 2 ? "Fácil" : "Média"}
-          </span>
-        </div>
-        <div>
-          <span className="block text-[#7a7772]">Colheita</span>
-          <span className="font-semibold text-[#1f291e]">
-            {cultura.dias_ate_colheita[0]}-{cultura.dias_ate_colheita[1]} dias
-          </span>
-        </div>
-        <div>
-          <span className="block text-[#7a7772]">Sol mínimo</span>
-          <span className="font-semibold text-[#1f291e]">{cultura.sol_horas_min}h / dia</span>
-        </div>
-      </div>
-
-      {motivos.length > 0 && <p className="text-xs text-[#2b4c2f]">✓ {motivos[0]}</p>}
-      {avisos.length > 0 && <p className="text-xs text-[#8c3f2b]">ℹ {avisos[0]}</p>}
-
-      <Link
-        href={`/cultura/${cultura.id}`}
-        className="w-full h-11 rounded-xl bg-[#244227] text-white font-semibold text-sm hover:bg-[#1a301c] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
-      >
-        <span>Ver guia completo de {cultura.nome}</span>
-        <span>→</span>
-      </Link>
-    </article>
   );
 }

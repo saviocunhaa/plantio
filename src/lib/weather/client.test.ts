@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { buscarCidades, obterClimaPorCoordenadas } from "./client";
+import {
+  buscarCidades,
+  obterClimaPorCoordenadas,
+  obterLocalizacaoPorIP,
+  obterNomePorCoordenadas,
+} from "./client";
 
 describe("Módulo de Clima e Geocodificação Open-Meteo", () => {
   it("retorna lista de cidades mapeadas a partir da resposta de geocodificação", async () => {
@@ -65,5 +70,46 @@ describe("Módulo de Clima e Geocodificação Open-Meteo", () => {
     expect(clima?.temperatura_c).toBe(29);
     expect(clima?.chovendo).toBe(false);
     expect(clima?.descricao_resumida).toContain("quente");
+  });
+
+  it("resolve nome da cidade por geocodificação reversa das coordenadas", async () => {
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        city: "Fortaleza",
+        principalSubdivision: "Ceará",
+      }),
+    });
+
+    const resultado = await obterNomePorCoordenadas(
+      -3.71,
+      -38.54,
+      mockFetch as unknown as typeof fetch
+    );
+
+    expect(resultado).toBeDefined();
+    expect(resultado?.nome).toBe("Fortaleza");
+    expect(resultado?.estado).toBe("Ceará");
+  });
+
+  it("obtém localização automática por IP em caso de fallback", async () => {
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        success: true,
+        city: "Salvador",
+        region: "Bahia",
+        latitude: -12.97,
+        longitude: -38.51,
+      }),
+    });
+
+    const localizacao = await obterLocalizacaoPorIP(
+      mockFetch as unknown as typeof fetch
+    );
+
+    expect(localizacao).toBeDefined();
+    expect(localizacao?.nome).toBe("Salvador");
+    expect(localizacao?.estado).toBe("Bahia");
   });
 });

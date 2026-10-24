@@ -52,6 +52,65 @@ export async function buscarCidades(
   }
 }
 
+export async function obterNomePorCoordenadas(
+  latitude: number,
+  longitude: number,
+  fetchFn: typeof fetch = fetch
+): Promise<{ nome: string; estado?: string } | null> {
+  const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`;
+
+  try {
+    const res = await fetchFn(url, { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) return null;
+
+    const data = (await res.json()) as {
+      city?: string;
+      locality?: string;
+      principalSubdivision?: string;
+    };
+
+    const nome = data.city || data.locality || "Minha Localização";
+    return {
+      nome,
+      estado: data.principalSubdivision,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export async function obterLocalizacaoPorIP(
+  fetchFn: typeof fetch = fetch
+): Promise<LocalizacaoCidade | null> {
+  try {
+    const res = await fetchFn("https://ipwho.is/", {
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) return null;
+
+    const data = (await res.json()) as {
+      success?: boolean;
+      city?: string;
+      region?: string;
+      country?: string;
+      latitude?: number;
+      longitude?: number;
+    };
+
+    if (data.success === false || !data.latitude || !data.longitude) return null;
+
+    return {
+      nome: data.city || "Minha Cidade",
+      estado: data.region,
+      pais: data.country || "Brasil",
+      latitude: data.latitude,
+      longitude: data.longitude,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export async function obterClimaPorCoordenadas(
   latitude: number,
   longitude: number,

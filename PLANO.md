@@ -28,7 +28,11 @@ Um app web, pensado primeiro para celular, que leva uma pessoa que nunca plantou
 ### MVP (versão 1)
 
 1. **Onboarding rápido** em 3 telas: local, tipo/tamanho do espaço, experiência.
-2. **Localização:** GPS do navegador ou busca por cidade (Juazeiro do Norte, CE, por exemplo).
+2. **Localização automática e manual:**
+   - **GPS do navegador:** Detecção precisa por coordenadas (`navigator.geolocation`) com 1 clique no botão "Usar minha localização atual".
+   - **Localização por Internet / IP:** Fallback automático quando o GPS estiver desativado ou o usuário preferir não conceder permissão, descobrindo cidade e clima pela conexão de internet.
+   - **Busca por cidade:** Campo de busca rápida com autocompletar para qualquer município do Brasil.
+   - **Clima integrado:** Consulta automática de temperatura e chuva em tempo real via Open-Meteo.
 3. **Tipo de espaço:**
    - Casa/apartamento: vasos, jardineira, garrafa pet, horta vertical.
    - Quintal pequeno (até \~20 m²).
@@ -75,7 +79,7 @@ Cada cultura passa por estas fases, com tarefas, duração e dicas:
 
 ### 4.1 Dados de entrada
 
-- Latitude e longitude (GPS ou geocodificação da cidade).
+- Latitude e longitude (obtidos via GPS do navegador, geolocalização por IP/Internet ou busca por cidade).
 - Mês atual.
 - Tipo e tamanho do espaço.
 - Horas de sol e acesso à água.
