@@ -10,8 +10,12 @@ test.describe("Fluxo Principal do Plantio Fácil", () => {
     await page.goto("/");
     await expect(page.getByText("Bem-vindo ao Plantio Fácil")).toBeVisible();
 
+    await page.context().grantPermissions(["geolocation"]);
+    await page.context().setGeolocation({ latitude: -7.2131, longitude: -39.3153 });
+
     await page.getByRole("button", { name: /Começar agora/ }).click();
-    await page.getByRole("button", { name: /Continuar sem local/ }).click();
+    await page.getByRole("button", { name: /Usar minha localização/ }).last().click();
+    await expect(page.getByText("Qual seu espaço de plantio?")).toBeVisible({ timeout: 10000 });
     await page.getByRole("button", { name: /Quintal Pequeno/ }).click();
     await page.getByRole("button", { name: /Pleno/ }).click();
     await page.getByRole("button", { name: /Ver recomendações/ }).click();

@@ -55,7 +55,10 @@ function HomeConteudo() {
   });
 
   const [cidadeNome, setCidadeNome] = useState<string | undefined>();
-  const [climaAtual, setClimaAtual] = useState<{ temperatura_c: number; chuva_mm: number } | undefined>();
+  const [climaAtual, setClimaAtual] = useState<{
+    temperatura_c: number;
+    chovendo?: boolean;
+  } | undefined>();
   const [diagnosticoAberto, setDiagnosticoAberto] = useState(false);
   const [onboardingAberto, setOnboardingAberto] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
@@ -134,7 +137,7 @@ function HomeConteudo() {
           if (data.clima) {
             setClimaAtual({
               temperatura_c: data.clima.temperatura_c,
-              chuva_mm: data.clima.chuva_mm || 0,
+              chovendo: Boolean(data.clima.chovendo),
             });
             setInput((prev) => ({
               ...prev,

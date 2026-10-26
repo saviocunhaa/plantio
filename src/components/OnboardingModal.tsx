@@ -47,6 +47,21 @@ export function OnboardingModal({ aberto, onConcluir, onFechar }: OnboardingModa
 
   const handleDetectarLocalizacao = () => {
     setBuscando(true);
+    const detectarPorIP = async () => {
+      try {
+        const res = await fetch("/api/clima?auto=ip");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.localizacao) {
+            setCidadeSelecionada(data.localizacao);
+            setEtapa(3);
+          }
+        }
+      } finally {
+        setBuscando(false);
+      }
+    };
+
     if (typeof navigator !== "undefined" && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -57,36 +72,28 @@ export function OnboardingModal({ aberto, onConcluir, onFechar }: OnboardingModa
               );
               if (res.ok) {
                 const data = await res.json();
-                if (data.localizacao) {
-                  setCidadeSelecionada(data.localizacao);
+                const loc = data.localizacao ?? data.cidade;
+                if (loc) {
+                  setCidadeSelecionada(loc);
                   setEtapa(3);
+                  return;
                 }
               }
+              await detectarPorIP();
+            } catch {
+              await detectarPorIP();
             } finally {
               setBuscando(false);
             }
           })();
         },
         () => {
-          void (async () => {
-            try {
-              const res = await fetch("/api/clima?auto=ip");
-              if (res.ok) {
-                const data = await res.json();
-                if (data.localizacao) {
-                  setCidadeSelecionada(data.localizacao);
-                  setEtapa(3);
-                }
-              }
-            } finally {
-              setBuscando(false);
-            }
-          })();
+          void detectarPorIP();
         },
-        { timeout: 8000 }
+        { timeout: 6000 }
       );
     } else {
-      setBuscando(false);
+      void detectarPorIP();
     }
   };
 
@@ -226,61 +233,29 @@ export function OnboardingModal({ aberto, onConcluir, onFechar }: OnboardingModa
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <button
-                type="button"
-                onClick={() => setEspaco("vaso")}
-                className={`p-3 rounded-xl border text-left flex flex-col gap-1 ${
-                  espaco === "vaso"
-                    ? "border-[#244227] bg-[#eef5ee] ring-1 ring-[#244227] font-semibold text-[#1e3d22]"
-                    : "border-[#e0dad1] text-[#474542] hover:bg-[#faf9f7]"
-                }`}
-              >
-                <span className="text-xl">🪴</span>
-                <span>Vasos / Apartamento</span>
-                <span className="text-[10px] text-[#73706b] font-normal">Janela ou varanda</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setEspaco("quintal_pequeno")}
-                className={`p-3 rounded-xl border text-left flex flex-col gap-1 ${
-                  espaco === "quintal_pequeno"
-                    ? "border-[#244227] bg-[#eef5ee] ring-1 ring-[#244227] font-semibold text-[#1e3d22]"
-                    : "border-[#e0dad1] text-[#474542] hover:bg-[#faf9f7]"
-                }`}
-              >
-                <span className="text-xl">🏡</span>
-                <span>Quintal Pequeno</span>
-                <span className="text-[10px] text-[#73706b] font-normal">Até ~20 m² de terra</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setEspaco("terreno_medio")}
-                className={`p-3 rounded-xl border text-left flex flex-col gap-1 ${
-                  espaco === "terreno_medio"
-                    ? "border-[#244227] bg-[#eef5ee] ring-1 ring-[#244227] font-semibold text-[#1e3d22]"
-                    : "border-[#e0dad1] text-[#474542] hover:bg-[#faf9f7]"
-                }`}
-              >
-                <span className="text-xl">🌾</span>
-                <span>Terreno Médio</span>
-                <span className="text-[10px] text-[#73706b] font-normal">20 a 500 m²</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setEspaco("terra_grande")}
-                className={`p-3 rounded-xl border text-left flex flex-col gap-1 ${
-                  espaco === "terra_grande"
-                    ? "border-[#244227] bg-[#eef5ee] ring-1 ring-[#244227] font-semibold text-[#1e3d22]"
-                    : "border-[#e0dad1] text-[#474542] hover:bg-[#faf9f7]"
-                }`}
-              >
-                <span className="text-xl">🚜</span>
-                <span>Terra Grande / Sítio</span>
-                <span className="text-[10px] text-[#73706b] font-normal">Acima de 500 m²</span>
-              </button>
+              {(
+                [
+                  { id: "vaso", icon: "🪴", titulo: "Vasos / Apartamento", sub: "Janela ou varanda" },
+                  { id: "quintal_pequeno", icon: "🏡", titulo: "Quintal Pequeno", sub: "Até ~20 m² de terra" },
+                  { id: "terreno_medio", icon: "🌾", titulo: "Terreno Médio", sub: "20 a 500 m²" },
+                  { id: "terra_grande", icon: "🚜", titulo: "Terra Grande / Sítio", sub: "Acima de 500 m²" },
+                ] as const
+              ).map((op) => (
+                <button
+                  key={op.id}
+                  type="button"
+                  onClick={() => setEspaco(op.id)}
+                  className={`p-3 rounded-xl border text-left flex flex-col gap-1 ${
+                    espaco === op.id
+                      ? "border-[#244227] bg-[#eef5ee] ring-1 ring-[#244227] font-semibold text-[#1e3d22]"
+                      : "border-[#e0dad1] text-[#474542] hover:bg-[#faf9f7]"
+                  }`}
+                >
+                  <span className="text-xl">{op.icon}</span>
+                  <span>{op.titulo}</span>
+                  <span className="text-[10px] text-[#73706b] font-normal">{op.sub}</span>
+                </button>
+              ))}
             </div>
 
             <div className="space-y-1">

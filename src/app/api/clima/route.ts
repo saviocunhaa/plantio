@@ -41,7 +41,15 @@ export async function GET(request: Request) {
       obterNomePorCoordenadas(lat, lon),
     ]);
 
-    return NextResponse.json({ clima, cidade: infoCidade });
+    const localizacao = {
+      nome: infoCidade?.nome || "Minha Localização",
+      estado: infoCidade?.estado,
+      pais: "Brasil",
+      latitude: lat,
+      longitude: lon,
+    };
+
+    return NextResponse.json({ clima, cidade: localizacao, localizacao });
   }
 
   return NextResponse.json(

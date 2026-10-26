@@ -13,7 +13,8 @@ interface AbaHojeProps {
   onAbrirDiagnostico?: () => void;
   clima?: {
     temperatura_c: number;
-    chuva_mm: number;
+    chuva_mm?: number;
+    chovendo?: boolean;
     descricao?: string;
   };
   cidadeNome?: string;
@@ -74,7 +75,7 @@ export function AbaHoje({
     );
   }
 
-  const vaiChover = clima && clima.chuva_mm >= 3;
+  const vaiChover = Boolean(clima && (clima.chovendo || (clima.chuva_mm ?? 0) >= 3));
   const calorIntenso = clima && clima.temperatura_c >= 32;
 
   return (
@@ -117,7 +118,7 @@ export function AbaHoje({
           <span className="text-2xl">🌧️</span>
           <div className="text-xs space-y-1">
             <strong className="text-[#1a4a6e] block text-sm">
-              Alerta de Chuva Hoje ({clima.chuva_mm} mm previstos)
+              Alerta de Chuva na Região
             </strong>
             <p className="text-[#2b587a]">
               A previsão indica chuva para sua região! Se suas plantas estiverem expostas ao ar livre,
