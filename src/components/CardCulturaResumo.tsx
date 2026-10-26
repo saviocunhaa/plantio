@@ -24,7 +24,7 @@ export function CardCulturaResumo({ item }: { item: ItemRecomendado }) {
           </span>
           <h3 className="text-xl font-bold text-[#1f291e]">{cultura.nome}</h3>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.text}`}>
+        <span className={`shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-semibold ${badge.bg} ${badge.text}`}>
           {badge.label}
         </span>
       </div>
@@ -55,10 +55,11 @@ export function CardCulturaResumo({ item }: { item: ItemRecomendado }) {
 
       <Link
         href={`/cultura/${cultura.id}`}
+        aria-label={`Ver guia completo de ${cultura.nome}`}
         className="w-full h-11 rounded-xl bg-[#244227] text-white font-semibold text-sm hover:bg-[#1a301c] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
       >
-        <span>Ver guia completo de {cultura.nome}</span>
-        <span>→</span>
+        <span>Ver guia completo</span>
+        <span aria-hidden="true">→</span>
       </Link>
     </article>
   );

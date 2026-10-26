@@ -12,6 +12,7 @@
         "lint:rules": "node scripts/verify-quality-rules.mjs ./eslint-rules/index.cjs",
         "test": "vitest run",
         "test:watch": "vitest",
+        "test:e2e": "playwright test",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",
         "check": "npm run lint && npm run typecheck && npm run lint:typed && npm run lint:rules && npm test && npm run build"
@@ -30,6 +31,7 @@
     },
     "devDependencies": {
         "@next/env": "^16.4.3",
+        "@playwright/test": "^1.64.1",
         "@tailwindcss/postcss": "^4.3.3",
         "@tailwindcss/turbopack": "^4",
         "@types/node": "^20.17.0",

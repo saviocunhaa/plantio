@@ -228,7 +228,8 @@
     ],
     "fontes": [
       "Embrapa Hortaliças"
-    ]
+    ],
+    "aviso_seguranca": "Atenção com pets e crianças pequenas: apenas os frutos maduros são comestíveis; folhas e caules verdes do tomateiro não devem ser ingeridos por cães e gatos."
   },
   {
     "id": "coentro",
@@ -793,7 +794,8 @@
     ],
     "fontes": [
       "Embrapa Hortaliças"
-    ]
+    ],
+    "verificar": true
   },
   {
     "id": "pimenta",
@@ -887,7 +889,9 @@
     ],
     "fontes": [
       "Embrapa Hortaliças"
-    ]
+    ],
+    "verificar": true,
+    "aviso_seguranca": "Cuidado com crianças e pets: os frutos ardidos podem causar irritação nos olhos, boca e pele sensível. Lave bem as mãos após a colheita."
   },
   {
     "id": "quiabo",
@@ -974,7 +978,8 @@
     "fontes": [
       "Embrapa Hortaliças",
       "Embrapa Semiárido"
-    ]
+    ],
+    "verificar": true
   },
   {
     "id": "maxixe",
@@ -1054,7 +1059,8 @@
     "fontes": [
       "Embrapa Semiárido",
       "Embrapa Hortaliças"
-    ]
+    ],
+    "verificar": true
   },
   {
     "id": "milho",
@@ -1139,7 +1145,8 @@
     ],
     "fontes": [
       "Embrapa Milho e Sorgo"
-    ]
+    ],
+    "verificar": true
   },
   {
     "id": "macaxeira",
@@ -1218,7 +1225,9 @@
     "pragas_comuns": [],
     "fontes": [
       "Embrapa Mandioca e Fruticultura"
-    ]
+    ],
+    "verificar": true,
+    "aviso_seguranca": "Certifique-se de plantar apenas variedades mansas (de mesa/aipim) e cozinhe sempre muito bem as raízes antes do consumo. Folhas cruas não devem ser dadas a animais domésticos."
   },
   {
     "id": "batata-doce",
@@ -1304,6 +1313,7 @@
     "pragas_comuns": [],
     "fontes": [
       "Embrapa Hortaliças"
-    ]
+    ],
+    "verificar": true
   }
 ]

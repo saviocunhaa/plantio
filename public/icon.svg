@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Plantio Fácil">
+  <rect width="512" height="512" rx="112" fill="#244227"/>
+  <path d="M256 392V240" stroke="#fcfbfa" stroke-width="28" stroke-linecap="round"/>
+  <path d="M256 268C256 188 320 132 396 132C396 208 340 268 256 268Z" fill="#8ec792"/>
+  <path d="M256 300C256 228 196 176 124 176C124 248 180 300 256 300Z" fill="#fcfbfa"/>
+</svg>

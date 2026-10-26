@@ -71,6 +71,8 @@ export const CulturaSchema = z.object({
   fases: z.array(FaseCulturaSchema).default([]),
   pragas_comuns: z.array(PragaCulturaSchema).default([]),
   fontes: z.array(z.string()),
+  verificar: z.boolean().optional(),
+  aviso_seguranca: z.string().optional(),
 });
 
 export const InputRecomendacaoSchema = z.object({

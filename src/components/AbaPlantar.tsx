@@ -19,6 +19,14 @@ interface AbaPlantarProps {
   onSelecionarCidade: (cidade: LocalizacaoCidade) => void;
 }
 
+// Mapeia a temperatura real (ex.: 24,3°C vinda do clima) para a opção correspondente do select.
+function faixaTemperatura(t: number): number {
+  if (t < 17) return 14;
+  if (t < 23) return 20;
+  if (t < 29) return 26;
+  return 32;
+}
+
 export function AbaPlantar({
   recomendacoes,
   input,
@@ -263,7 +271,7 @@ export function AbaPlantar({
             </label>
             <select
               id={tempId}
-              value={input.temperatura_media_c}
+              value={faixaTemperatura(input.temperatura_media_c)}
               onChange={(e) =>
                 onInputChange({
                   ...input,

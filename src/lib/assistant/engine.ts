@@ -123,7 +123,7 @@ export async function processarPerguntaAssistente(
   );
 
   const ollamaUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-  const modeloGemma = process.env.GEMMA_MODEL || "gemma2:2b";
+  const modeloGemma = process.env.GEMMA_MODEL || "gemma4";
 
   try {
     const controller = new AbortController();

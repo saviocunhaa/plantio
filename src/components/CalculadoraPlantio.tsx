@@ -28,7 +28,7 @@ export function CalculadoraPlantio({ cultura }: { cultura: Cultura }) {
           <h2 className="text-lg font-bold text-[#1f291e]">Calculadora de Espaço e Mudas</h2>
         </div>
         <span className="text-[11px] font-semibold text-[#244227] bg-[#eef5ee] px-2.5 py-0.5 rounded-full">
-          Agronomia Embrapa
+          Estimativa por Espaçamento
         </span>
       </div>
 
@@ -159,7 +159,7 @@ export function CalculadoraPlantio({ cultura }: { cultura: Cultura }) {
 
       <div className="bg-[#eef5ee] border border-[#cbe1ce] rounded-xl p-3.5 space-y-1.5 text-xs text-[#1e3d22]">
         <div className="flex items-center justify-between">
-          <strong>💰 Economia Estimada em Casa:</strong>
+          <strong>💰 Economia Aproximada (referência de varejo):</strong>
           <span className="font-bold text-sm bg-white px-2.5 py-0.5 rounded-full border border-[#cbe1ce]">
             ~R$ {resultado.economia_estimada_reais},00
           </span>

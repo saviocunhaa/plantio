@@ -39,7 +39,10 @@ export function ModalDiagnosticoVisual({
 
   if (!aberto) return null;
 
-  const plantioEscolhido = plantiosAtivos.find((p) => p.id === plantioIdSelecionado);
+  // Se a seleção salva não existe mais (ou a lista mudou após a montagem), usa a primeira planta ativa.
+  const plantioEscolhido =
+    plantiosAtivos.find((p) => p.id === plantioIdSelecionado) ?? plantiosAtivos[0];
+  const plantioIdEfetivo = plantioEscolhido?.id ?? "";
 
   const handleFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -84,9 +87,9 @@ export function ModalDiagnosticoVisual({
   };
 
   const handleSalvarNoDiario = () => {
-    if (!resultado || !plantioIdSelecionado || !onAdicionarAoDiario) return;
+    if (!resultado || !plantioIdEfetivo || !onAdicionarAoDiario) return;
     const textoDiario = `[Diagnóstico Foliar] ${resultado.nome_problema}. Tratamento: ${resultado.solucao_caseira}`;
-    onAdicionarAoDiario(plantioIdSelecionado, textoDiario, fotoBase64);
+    onAdicionarAoDiario(plantioIdEfetivo, textoDiario, fotoBase64);
     setSalvoNoDiario(true);
   };
 
@@ -111,7 +114,7 @@ export function ModalDiagnosticoVisual({
           <div className="space-y-1">
             <label className="text-xs font-semibold text-[#474542]">Qual planta analisar?</label>
             <select
-              value={plantioIdSelecionado}
+              value={plantioIdEfetivo}
               onChange={(e) => setPlantioIdSelecionado(e.target.value)}
               className="w-full h-10 px-3 rounded-xl border border-[#cfc8bf] bg-white text-xs outline-hidden focus:ring-2 focus:ring-[#244227]"
             >
@@ -125,7 +128,9 @@ export function ModalDiagnosticoVisual({
         )}
 
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[#474542]">Foto da folha ou praga (opcional)</label>
+          <label className="text-xs font-semibold text-[#474542]">
+            Foto para registro no diário (opcional — a análise usa o sintoma marcado abaixo)
+          </label>
           <div className="flex items-center gap-3">
             <label className="h-10 px-4 rounded-xl border border-[#cfc8bf] bg-[#f7f5f2] hover:bg-[#edeae4] text-[#244227] text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
               <span>📷</span>
@@ -205,7 +210,7 @@ export function ModalDiagnosticoVisual({
               </p>
               <div className="bg-white p-3 rounded-xl border border-[#e5dfd5] space-y-1">
                 <strong className="text-[#244227] flex items-center gap-1">
-                  <span>🍃</span> Solução Caseira Segura (Embrapa):
+                  <span>🍃</span> Solução Caseira Segura (Manejo Orgânico):
                 </strong>
                 <p className="text-[#2e2d2a]">{resultado.solucao_caseira}</p>
               </div>
@@ -219,7 +224,7 @@ export function ModalDiagnosticoVisual({
               </div>
             </div>
 
-            {plantioIdSelecionado && onAdicionarAoDiario && (
+            {plantioIdEfetivo && onAdicionarAoDiario && (
               <button
                 type="button"
                 onClick={handleSalvarNoDiario}

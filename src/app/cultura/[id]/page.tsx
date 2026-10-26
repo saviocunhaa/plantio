@@ -163,10 +163,23 @@ export default async function PaginaCultura({
           </section>
         )}
 
+        {/* Aviso de segurança para pets e crianças */}
+        {cultura.aviso_seguranca && (
+          <section className="bg-[#fff9eb] rounded-2xl p-5 border border-[#f7e0a3] text-xs text-[#6e490e] space-y-1">
+            <strong className="text-sm text-[#875a12] flex items-center gap-1.5">
+              <span>⚠️</span>
+              <span>Cuidado com crianças e animais domésticos</span>
+            </strong>
+            <p className="leading-relaxed">{cultura.aviso_seguranca}</p>
+          </section>
+        )}
+
         {/* Rodapé com fontes */}
         <p className="text-xs text-[#7a7772] text-center">
-          Dados agronômicos verificados com base nas recomendações técnicas da{" "}
-          {cultura.fontes.join(", ")}.
+          Referências de cultivo: {cultura.fontes.join(", ")}.
+          {cultura.verificar
+            ? " Ficha com revisão agronômica pendente (verificar: true)."
+            : ""}
         </p>
       </main>
     </div>

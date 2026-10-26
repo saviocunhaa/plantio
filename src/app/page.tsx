@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useSyncExternalStore } from "react";
 import { AbaAssistente } from "@/components/AbaAssistente";
 import { AbaHoje } from "@/components/AbaHoje";
 import { AbaPlantar } from "@/components/AbaPlantar";
@@ -21,9 +21,18 @@ import { LocalizacaoCidade } from "@/lib/weather/types";
 const culturas = culturasData as Cultura[];
 type AbaAtiva = "hoje" | "plantar" | "plantios" | "assistente";
 
+const assinarNada = () => () => {};
+
 export default function Home() {
+  // O estado inicial vem do localStorage, que só existe no navegador. Renderizar o
+  // conteúdo apenas após a hidratação evita divergência entre HTML do servidor e do cliente.
+  const noCliente = useSyncExternalStore(assinarNada, () => true, () => false);
+  const carregando = <div className="p-8 text-center text-sm">Carregando Plantio Fácil...</div>;
+
+  if (!noCliente) return carregando;
+
   return (
-    <Suspense fallback={<div className="p-8 text-center text-sm">Carregando Plantio Fácil...</div>}>
+    <Suspense fallback={carregando}>
       <HomeConteudo />
     </Suspense>
   );
