@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalculadoraPlantio } from "@/components/CalculadoraPlantio";
 import culturasData from "@/data/culturas.json";
+import { gerarJornada11Fases } from "@/lib/plantios/service";
 import { Cultura } from "@/lib/recommendation/types";
 import { DetalheCulturaCliente } from "./DetalheCulturaCliente";
 
@@ -18,6 +19,8 @@ export default async function PaginaCultura({
   if (!cultura) {
     notFound();
   }
+
+  const jornada11Fases = gerarJornada11Fases(cultura);
 
   return (
     <div className="min-h-screen bg-[#fcfbfa] text-[#1f291e] pb-16">
@@ -100,15 +103,20 @@ export default async function PaginaCultura({
         {/* Calculadora de Espaço e Quantidade */}
         <CalculadoraPlantio cultura={cultura} />
 
-        {/* Linha do Tempo das Fases do Cultivo */}
-        {cultura.fases.length > 0 && (
+        {/* Linha do Tempo das 11 Fases Canônicas do Cultivo */}
+        {jornada11Fases.length > 0 && (
           <section className="bg-white rounded-2xl p-6 border border-[#e8e4df] shadow-xs space-y-4">
-            <h2 className="text-lg font-bold text-[#1f291e] flex items-center gap-2">
-              <span>🌱</span>
-              <span>Fases da Jornada (do plantio à colheita)</span>
-            </h2>
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="text-lg font-bold text-[#1f291e] flex items-center gap-2">
+                <span>🌱</span>
+                <span>Fases da Jornada (do plantio à colheita)</span>
+              </h2>
+              <span className="text-xs font-semibold text-[#244227] bg-[#eef5ee] px-2.5 py-1 rounded-full shrink-0">
+                11 fases
+              </span>
+            </div>
             <div className="space-y-4 border-l-2 border-[#244227] pl-4 ml-2">
-              {cultura.fases.map((fase) => (
+              {jornada11Fases.map((fase) => (
                 <div key={fase.id} className="space-y-1.5 relative">
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-base text-[#1f291e]">{fase.nome}</h3>

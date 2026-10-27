@@ -3,6 +3,7 @@ import culturasData from "../../data/culturas.json";
 import { Cultura } from "../recommendation/types";
 import {
   calcularDiasPlantio,
+  gerarJornada11Fases,
   gerarTarefasHoje,
   importarBackupPlantios,
   obterFaseAtual,
@@ -95,5 +96,31 @@ describe("Serviço de Gestão de Plantios e Tarefas", () => {
 
     const corrompido = importarBackupPlantios("{nao_eh_json", []);
     expect(corrompido.sucesso).toBe(false);
+  });
+
+  it("gera as 11 fases canônicas da Seção 3 do PLANO.md para todas as 15 culturas", () => {
+    const idsEsperados = [
+      "planejamento",
+      "preparacao",
+      "semeadura",
+      "germinacao",
+      "crescimento_inicial",
+      "crescimento_vegetativo",
+      "floracao_frutificacao",
+      "manejo_pragas",
+      "colheita",
+      "pos_colheita",
+      "encerramento_ciclo",
+    ];
+
+    for (const cultura of culturas) {
+      const jornada = gerarJornada11Fases(cultura);
+      expect(jornada).toHaveLength(11);
+      expect(jornada.map((f) => f.id)).toEqual(idsEsperados);
+      for (const fase of jornada) {
+        expect(fase.dias_fim).toBeGreaterThanOrEqual(fase.dias_inicio);
+        expect(fase.tarefas.length).toBeGreaterThan(0);
+      }
+    }
   });
 });

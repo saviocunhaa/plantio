@@ -1,25 +1,29 @@
-const CACHE_NAME = "plantio-facil-v3";
-const SHELL_URLS = ["/", "/manifest.webmanifest", "/icon.svg"];
+const CACHE_NAME = "plantio-facil-v4";
+const STATIC_URLS = ["/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(SHELL_URLS))
+      .then((cache) => cache.addAll(STATIC_URLS))
       .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(
-          keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-        )
-      )
-      .then(() => self.clients.claim())
+    (async () => {
+      const keys = await caches.keys();
+      const oldKeys = keys.filter((key) => key !== CACHE_NAME);
+      await Promise.all(oldKeys.map((key) => caches.delete(key)));
+      await self.clients.claim();
+      if (oldKeys.length > 0) {
+        const clients = await self.clients.matchAll({ type: "window" });
+        for (const client of clients) {
+          await client.navigate(client.url);
+        }
+      }
+    })()
   );
 });
 
@@ -29,22 +33,20 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith("/api/") || url.searchParams.has("_rsc")) return;
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/_next/") ||
+    url.searchParams.has("_rsc")
+  ) {
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith(
-      fetch(request)
-        .then((response) => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          }
-          return response;
-        })
-        .catch(async () => {
-          const cached = await caches.match(request);
-          return cached || caches.match("/");
-        })
+      fetch(request).catch(async () => {
+        const cached = await caches.match(request);
+        return cached || Response.error();
+      })
     );
   }
 });

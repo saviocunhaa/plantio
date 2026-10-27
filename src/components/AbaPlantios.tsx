@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Cultura } from "@/lib/recommendation/types";
-import { calcularDiasPlantio, importarBackupPlantios, obterFaseAtual } from "@/lib/plantios/service";
+import { calcularDiasPlantio, gerarJornada11Fases, importarBackupPlantios, obterFaseAtual } from "@/lib/plantios/service";
 import { PlantioAtivo } from "@/lib/plantios/types";
 
 interface AbaPlantiosProps {
@@ -147,10 +147,12 @@ function CardPlantioDetalhado({
   const [notaTexto, setNotaTexto] = useState("");
   const [fotoBase64, setFotoBase64] = useState<string | undefined>();
   const [mostrarDiario, setMostrarDiario] = useState(false);
+  const [mostrarJornada, setMostrarJornada] = useState(false);
   const [fotoAmpliada, setFotoAmpliada] = useState<string | null>(null);
 
   const dias = calcularDiasPlantio(plantio.data_plantio);
   const fase = obterFaseAtual(cultura, dias);
+  const jornada11 = gerarJornada11Fases(cultura);
   const diasAteColheitaMax = cultura.dias_ate_colheita[1];
   const progresso = Math.min(100, Math.round((dias / diasAteColheitaMax) * 100));
 
@@ -227,16 +229,44 @@ function CardPlantioDetalhado({
         </div>
       )}
 
-      {/* Diário de notas e fotos */}
+      {/* Jornada (11 fases) e Diário de notas e fotos */}
       <div className="pt-2 border-t border-[#f0ede8] space-y-2">
-        <button
-          type="button"
-          onClick={() => setMostrarDiario(!mostrarDiario)}
-          className="text-xs font-semibold text-[#244227] hover:underline flex items-center gap-1"
-        >
-          <span>{mostrarDiario ? "▲ Ocultar diário" : "▼ Ver diário e fotos"}</span>
-          <span>({plantio.diario.length})</span>
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setMostrarDiario(!mostrarDiario)}
+            className="text-xs font-semibold text-[#244227] hover:underline flex items-center gap-1"
+          >
+            <span>{mostrarDiario ? "▲ Ocultar diário" : "▼ Ver diário e fotos"}</span>
+            <span>({plantio.diario.length})</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setMostrarJornada(!mostrarJornada)}
+            className="text-xs font-semibold text-[#244227] hover:underline flex items-center gap-1"
+          >
+            <span>{mostrarJornada ? "▲ Ocultar jornada" : "▼ Ver jornada (11 fases)"}</span>
+          </button>
+        </div>
+
+        {mostrarJornada && (
+          <div className="space-y-2.5 pt-2 border-l-2 border-[#244227] pl-3 ml-1 max-h-60 overflow-y-auto">
+            {jornada11.map((f) => {
+              const emAndamento = dias >= f.dias_inicio && dias <= f.dias_fim;
+              return (
+                <div key={f.id} className={`p-2.5 rounded-xl text-xs ${emAndamento ? "bg-[#eef5ee] border border-[#cbe1ce]" : "bg-[#fbfaf9] border border-[#eeebe6]"}`}>
+                  <div className="flex items-center justify-between gap-2">
+                    <strong className="text-[#1f291e]">{f.nome}</strong>
+                    <span className="text-[10px] font-semibold text-[#244227]">
+                      {emAndamento ? "★ Fase atual" : `Dias ${f.dias_inicio}-${f.dias_fim}`}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#57544f] mt-0.5">{f.tarefas[0]?.como_fazer}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {mostrarDiario && (
           <div className="space-y-3 pt-2">

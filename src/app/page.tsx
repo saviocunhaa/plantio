@@ -23,33 +23,31 @@ type AbaAtiva = "hoje" | "plantar" | "plantios" | "assistente";
 
 const assinarNada = () => () => {};
 
-export default function Home() {
-  // O estado inicial vem do localStorage, que só existe no navegador. Renderizar o
-  // conteúdo apenas após a hidratação evita divergência entre HTML do servidor e do cliente.
-  const noCliente = useSyncExternalStore(assinarNada, () => true, () => false);
-  const carregando = <div className="p-8 text-center text-sm">Carregando Plantio Fácil...</div>;
-
-  if (!noCliente) return carregando;
-
-  return (
-    <Suspense fallback={carregando}>
-      <HomeConteudo />
-    </Suspense>
-  );
-}
-
-function HomeConteudo() {
+function LeitorParametroAba({ onAbaUrl }: { onAbaUrl: (aba: AbaAtiva) => void }) {
   const searchParams = useSearchParams();
   const abaParam = searchParams.get("aba") as AbaAtiva | null;
+  const [ultimaAbaUrl, setUltimaAbaUrl] = useState<string | null>(null);
+
+  if (
+    abaParam &&
+    abaParam !== ultimaAbaUrl &&
+    ["hoje", "plantar", "plantios", "assistente"].includes(abaParam)
+  ) {
+    setUltimaAbaUrl(abaParam);
+    onAbaUrl(abaParam);
+  }
+
+  return null;
+}
+
+export default function Home() {
+  const noCliente = useSyncExternalStore(assinarNada, () => true, () => false);
 
   const [plantios, setPlantios] = useState<PlantioAtivo[]>(() =>
     carregarPlantiosStorage()
   );
 
   const [abaAtiva, setAbaAtiva] = useState<AbaAtiva>(() => {
-    if (abaParam && ["hoje", "plantar", "plantios", "assistente"].includes(abaParam)) {
-      return abaParam;
-    }
     const salvos = carregarPlantiosStorage();
     return salvos.filter((p) => p.status === "ativo").length > 0 ? "hoje" : "plantar";
   });
@@ -67,6 +65,10 @@ function HomeConteudo() {
       carregarPlantiosStorage().length === 0
     );
   });
+
+  const plantiosVisiveis = noCliente ? plantios : [];
+  const abaVisivel: AbaAtiva = noCliente ? abaAtiva : "plantar";
+  const onboardingVisivel = noCliente && onboardingAberto;
 
   const mesAtual = new Date().getMonth() + 1;
   const [input, setInput] = useState<InputRecomendacao>({
@@ -179,6 +181,10 @@ function HomeConteudo() {
 
   return (
     <div className="min-h-screen bg-[#fcfbfa] text-[#1f291e] flex flex-col pb-24">
+      <Suspense fallback={null}>
+        <LeitorParametroAba onAbaUrl={setAbaAtiva} />
+      </Suspense>
+
       {/* Cabeçalho */}
       <header className="bg-[#244227] text-white py-4 px-4 shadow-sm sticky top-0 z-20">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
@@ -211,9 +217,9 @@ function HomeConteudo() {
 
       {/* Conteúdo Principal */}
       <main className="max-w-2xl mx-auto w-full px-4 py-6 flex-1">
-        {abaAtiva === "hoje" && (
+        {abaVisivel === "hoje" && (
           <AbaHoje
-            plantios={plantios}
+            plantios={plantiosVisiveis}
             culturas={culturas}
             onAlternarTarefa={handleAlternarTarefa}
             onIrParaPlantar={() => setAbaAtiva("plantar")}
@@ -223,7 +229,7 @@ function HomeConteudo() {
           />
         )}
 
-        {abaAtiva === "plantar" && (
+        {abaVisivel === "plantar" && (
           <AbaPlantar
             culturas={culturas}
             recomendacoes={recomendacoes}
@@ -234,9 +240,9 @@ function HomeConteudo() {
           />
         )}
 
-        {abaAtiva === "plantios" && (
+        {abaVisivel === "plantios" && (
           <AbaPlantios
-            plantios={plantios}
+            plantios={plantiosVisiveis}
             culturas={culturas}
             onAdicionarNota={handleAdicionarNota}
             onConcluirPlantio={handleConcluirPlantio}
@@ -245,9 +251,9 @@ function HomeConteudo() {
           />
         )}
 
-        {abaAtiva === "assistente" && (
+        {abaVisivel === "assistente" && (
           <AbaAssistente
-            plantios={plantios}
+            plantios={plantiosVisiveis}
             culturas={culturas}
             cidadeNome={cidadeNome}
             onAbrirDiagnostico={() => setDiagnosticoAberto(true)}
@@ -257,7 +263,7 @@ function HomeConteudo() {
 
       {/* Modais inovadores */}
       <OnboardingModal
-        aberto={onboardingAberto}
+        aberto={onboardingVisivel}
         onConcluir={handleConcluirOnboarding}
         onFechar={() => setOnboardingAberto(false)}
       />
@@ -265,7 +271,7 @@ function HomeConteudo() {
       <ModalDiagnosticoVisual
         aberto={diagnosticoAberto}
         onFechar={() => setDiagnosticoAberto(false)}
-        plantiosAtivos={plantios.filter((p) => p.status === "ativo")}
+        plantiosAtivos={plantiosVisiveis.filter((p) => p.status === "ativo")}
         onAdicionarAoDiario={handleAdicionarNota}
       />
 
@@ -286,7 +292,7 @@ function HomeConteudo() {
               type="button"
               onClick={() => setAbaAtiva(aba.id as AbaAtiva)}
               className={`flex flex-col items-center justify-center min-h-[48px] rounded-xl transition-colors ${
-                abaAtiva === aba.id
+                abaVisivel === aba.id
                   ? "text-[#244227] font-bold bg-[#f1f6f1]"
                   : "text-[#706c66] hover:text-[#244227]"
               }`}

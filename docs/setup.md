@@ -52,7 +52,7 @@ Todos os 9 arquivos do manifesto oficial do toolkit foram preenchidos com dados 
 | `npm run typecheck` | Validado | `next typegen && tsc --noEmit` completou com sucesso; rotas estáticas e dinâmicas tipadas. |
 | `npm run lint:typed` | Validado | `eslint --config eslint.typed.config.mjs .` executou com 0 erros em promises assíncronas. |
 | `npm run lint:rules` | Validado | `verify-quality-rules.mjs` confirmou: `max-lines: ok`, `no-direct-console: ok`, `no-direct-data-access: ok`. |
-| `npm test` | Validado | 10 arquivos de teste e 33 testes aprovados no Vitest (recomendação, clima, plantios, calculadora, diagnóstico, assistente, rotas de API, env, logger e db). |
+| `npm test` | Validado | 10 arquivos de teste e 34 testes aprovados no Vitest (recomendação, clima, plantios, calculadora, diagnóstico, assistente, rotas de API, env, logger e db). |
 | `npm run build` | Validado | Next.js 16 compilou com sucesso todas as rotas (`/api/assistente`, `/api/clima`, `/api/recomendar`, `/cultura/[id]`, `/`, `/manifest.webmanifest`). |
 | `npm run db:generate` | Validado | Drizzle Kit validou a integridade de schema sem pendências. |
 | `npm run check` | Validado | Pipeline completa encadeada executou e finalizou com código de saída 0. |
