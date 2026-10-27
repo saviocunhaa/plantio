@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Cultura } from "@/lib/recommendation/types";
-import { calcularDiasPlantio, obterFaseAtual } from "@/lib/plantios/service";
+import { calcularDiasPlantio, importarBackupPlantios, obterFaseAtual } from "@/lib/plantios/service";
 import { PlantioAtivo } from "@/lib/plantios/types";
 
 interface AbaPlantiosProps {
@@ -10,6 +10,7 @@ interface AbaPlantiosProps {
   culturas: Cultura[];
   onAdicionarNota: (plantioId: string, texto: string, fotoUrl?: string) => void;
   onConcluirPlantio: (plantioId: string) => void;
+  onRestaurarBackup?: (novosPlantios: PlantioAtivo[]) => void;
   onIrParaPlantar: () => void;
 }
 
@@ -18,14 +19,15 @@ export function AbaPlantios({
   culturas,
   onAdicionarNota,
   onConcluirPlantio,
+  onRestaurarBackup,
   onIrParaPlantar,
 }: AbaPlantiosProps) {
   const culturasMap = new Map(culturas.map((c) => [c.id, c]));
   const plantiosAtivos = plantios.filter((p) => p.status === "ativo");
+  const [mensagemBackup, setMensagemBackup] = useState<string | null>(null);
 
   const handleExportarBackup = () => {
-    const dados = JSON.stringify(plantios, null, 2);
-    const blob = new Blob([dados], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(plantios, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -34,24 +36,47 @@ export function AbaPlantios({
     URL.revokeObjectURL(url);
   };
 
+  const handleImportarArquivo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !onRestaurarBackup) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const res = importarBackupPlantios(String(reader.result ?? ""), plantios);
+      if (res.sucesso) {
+        onRestaurarBackup(res.plantios);
+        setMensagemBackup(`Backup restaurado (${res.importados} cultivo(s)).`);
+      } else {
+        setMensagemBackup(res.erro);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+
   if (plantiosAtivos.length === 0) {
     return (
       <div className="bg-white rounded-2xl p-6 border border-[#e8e4df] text-center space-y-4">
-        <span className="text-4xl" role="img" aria-label="Jardim">
-          🌿
-        </span>
+        <span className="text-4xl" role="img" aria-label="Jardim">🌿</span>
         <h2 className="text-xl font-bold text-[#1f291e]">Nenhum cultivo em andamento</h2>
         <p className="text-sm text-[#57544f] max-w-md mx-auto">
-          Suas plantinhas ativas aparecerão aqui com a contagem de dias, fase atual, fotos e o
-          diário de evolução.
+          Suas plantinhas ativas aparecerão aqui com a contagem de dias, fase atual, fotos e o diário de evolução.
         </p>
-        <button
-          type="button"
-          onClick={onIrParaPlantar}
-          className="w-full sm:w-auto px-6 h-12 rounded-xl bg-[#244227] text-white font-semibold text-sm hover:bg-[#1a301c] transition-colors"
-        >
-          Iniciar novo cultivo agora →
-        </button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={onIrParaPlantar}
+            className="w-full sm:w-auto px-6 h-12 rounded-xl bg-[#244227] text-white font-semibold text-sm hover:bg-[#1a301c] transition-colors"
+          >
+            Iniciar novo cultivo agora →
+          </button>
+          {onRestaurarBackup && (
+            <label className="w-full sm:w-auto px-4 h-12 rounded-xl border border-[#cfc8bf] text-[#244227] font-semibold text-xs hover:bg-[#f7f5f2] transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>📂 Restaurar backup</span>
+              <input type="file" accept="application/json,.json" onChange={handleImportarArquivo} className="hidden" />
+            </label>
+          )}
+        </div>
+        {mensagemBackup && <p className="text-xs text-[#8c3f2b]">{mensagemBackup}</p>}
       </div>
     );
   }
@@ -69,17 +94,30 @@ export function AbaPlantios({
           >
             💾 Backup
           </button>
+          {onRestaurarBackup && (
+            <label
+              className="text-[11px] font-semibold text-[#57544f] hover:text-[#244227] bg-[#f0ede8] hover:bg-[#e4dfd7] px-2.5 py-1 rounded-full transition-colors cursor-pointer"
+              title="Restaurar backup de cultivos em JSON"
+            >
+              📂 Restaurar
+              <input type="file" accept="application/json,.json" onChange={handleImportarArquivo} className="hidden" />
+            </label>
+          )}
           <span className="text-xs font-semibold text-[#244227] bg-[#eef5ee] px-3 py-1 rounded-full">
             {plantiosAtivos.length} ativa{plantiosAtivos.length !== 1 ? "s" : ""}
           </span>
         </div>
       </div>
+      {mensagemBackup && (
+        <p className="text-xs bg-[#eef5ee] text-[#1e3d22] px-3 py-2 rounded-xl border border-[#cbe1ce]">
+          {mensagemBackup}
+        </p>
+      )}
 
       <div className="space-y-4">
         {plantiosAtivos.map((plantio) => {
           const cultura = culturasMap.get(plantio.cultura_id);
           if (!cultura) return null;
-
           return (
             <CardPlantioDetalhado
               key={plantio.id}
@@ -119,7 +157,6 @@ function CardPlantioDetalhado({
   const handleSelecionarFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (loadEvent) => {
       const img = new Image();
@@ -167,12 +204,7 @@ function CardPlantioDetalhado({
             Fase atual: {fase?.nome ?? "Desenvolvimento"} ({dias} dias de cultivo)
           </p>
         </div>
-
-        <button
-          type="button"
-          onClick={onConcluirPlantio}
-          className="text-xs text-[#8c3f2b] hover:text-[#5e2112] font-semibold p-2"
-        >
+        <button type="button" onClick={onConcluirPlantio} className="text-xs text-[#8c3f2b] hover:text-[#5e2112] font-semibold p-2">
           Finalizar cultivo
         </button>
       </div>
@@ -181,19 +213,13 @@ function CardPlantioDetalhado({
       <div className="space-y-1.5">
         <div className="flex justify-between text-xs text-[#57544f]">
           <span>Ciclo até colheita</span>
-          <span>
-            {dias} de ~{cultura.dias_ate_colheita[0]}-{diasAteColheitaMax} dias
-          </span>
+          <span>{dias} de ~{cultura.dias_ate_colheita[0]}-{diasAteColheitaMax} dias</span>
         </div>
         <div className="w-full bg-[#f0ede8] rounded-full h-2.5 overflow-hidden">
-          <div
-            className="bg-[#244227] h-2.5 rounded-full transition-all duration-300"
-            style={{ width: `${progresso}%` }}
-          />
+          <div className="bg-[#244227] h-2.5 rounded-full transition-all duration-300" style={{ width: `${progresso}%` }} />
         </div>
       </div>
 
-      {/* O que observar nesta fase */}
       {fase?.o_que_observar && (
         <div className="bg-[#f7f5f2] rounded-xl p-3 text-xs text-[#3b3a37]">
           <strong className="text-[#244227]">O que esperar agora: </strong>
@@ -223,23 +249,12 @@ function CardPlantioDetalhado({
                   onChange={(e) => setNotaTexto(e.target.value)}
                   className="flex-1 h-10 px-3 text-xs rounded-xl border border-[#cfc8bf] bg-white outline-hidden focus:ring-2 focus:ring-[#244227]"
                 />
-
                 <label className="h-10 px-3 rounded-xl border border-[#cfc8bf] bg-[#f7f5f2] hover:bg-[#edeae4] text-[#244227] text-xs font-semibold flex items-center gap-1 cursor-pointer shrink-0">
                   <span>📷</span>
                   <span className="hidden sm:inline">Foto</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    capture="environment"
-                    onChange={handleSelecionarFoto}
-                    className="hidden"
-                  />
+                  <input type="file" accept="image/*" capture="environment" onChange={handleSelecionarFoto} className="hidden" />
                 </label>
-
-                <button
-                  type="submit"
-                  className="h-10 px-3 rounded-xl bg-[#244227] text-white text-xs font-semibold hover:bg-[#1a301c]"
-                >
+                <button type="submit" className="h-10 px-3 rounded-xl bg-[#244227] text-white text-xs font-semibold hover:bg-[#1a301c]">
                   Salvar
                 </button>
               </div>
@@ -247,17 +262,9 @@ function CardPlantioDetalhado({
               {fotoBase64 && (
                 <div className="flex items-center gap-2 bg-[#f0ede8] p-2 rounded-xl text-xs">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={fotoBase64}
-                    alt="Prévia da foto"
-                    className="w-10 h-10 object-cover rounded-lg"
-                  />
+                  <img src={fotoBase64} alt="Prévia da foto" className="w-10 h-10 object-cover rounded-lg" />
                   <span className="text-[#3b3a37] text-[11px] flex-1">Foto anexada</span>
-                  <button
-                    type="button"
-                    onClick={() => setFotoBase64(undefined)}
-                    className="text-[#8c3f2b] text-[11px] hover:underline"
-                  >
+                  <button type="button" onClick={() => setFotoBase64(undefined)} className="text-[#8c3f2b] text-[11px] hover:underline">
                     Remover foto
                   </button>
                 </div>
@@ -269,32 +276,18 @@ function CardPlantioDetalhado({
                 <p className="text-xs text-[#73706b]">Nenhum registro ainda.</p>
               ) : (
                 plantio.diario.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-[#fbfaf9] p-2.5 rounded-lg border border-[#eeebe6] text-xs flex items-start gap-2.5"
-                  >
+                  <div key={item.id} className="bg-[#fbfaf9] p-2.5 rounded-lg border border-[#eeebe6] text-xs flex items-start gap-2.5">
                     {item.foto_url && (
-                      <button
-                        type="button"
-                        onClick={() => setFotoAmpliada(item.foto_url ?? null)}
-                        className="shrink-0"
-                      >
+                      <button type="button" onClick={() => setFotoAmpliada(item.foto_url ?? null)} className="shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={item.foto_url}
-                          alt="Foto do registro"
-                          className="w-12 h-12 object-cover rounded-lg border border-[#ded8cf] hover:opacity-90"
-                        />
+                        <img src={item.foto_url} alt="Foto do registro" className="w-12 h-12 object-cover rounded-lg border border-[#ded8cf] hover:opacity-90" />
                       </button>
                     )}
                     <div className="flex-1">
                       <p className="text-[#262422]">{item.texto}</p>
                       <span className="text-[10px] text-[#85817a]">
                         {new Date(item.data).toLocaleDateString("pt-BR")} às{" "}
-                        {new Date(item.data).toLocaleTimeString("pt-BR", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                        {new Date(item.data).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
                       </span>
                     </div>
                   </div>
@@ -306,22 +299,11 @@ function CardPlantioDetalhado({
       </div>
 
       {fotoAmpliada && (
-        <div
-          className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4"
-          onClick={() => setFotoAmpliada(null)}
-        >
+        <div className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4" onClick={() => setFotoAmpliada(null)}>
           <div className="max-w-md w-full bg-white rounded-2xl overflow-hidden p-3 space-y-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={fotoAmpliada}
-              alt="Foto ampliada do cultivo"
-              className="w-full rounded-xl object-contain max-h-[70vh]"
-            />
-            <button
-              type="button"
-              onClick={() => setFotoAmpliada(null)}
-              className="w-full h-10 rounded-xl bg-[#244227] text-white text-xs font-semibold"
-            >
+            <img src={fotoAmpliada} alt="Foto ampliada do cultivo" className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <button type="button" onClick={() => setFotoAmpliada(null)} className="w-full h-10 rounded-xl bg-[#244227] text-white text-xs font-semibold">
               Fechar visualização
             </button>
           </div>

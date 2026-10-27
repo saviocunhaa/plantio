@@ -33,6 +33,7 @@ O servidor local estará disponível em `http://localhost:3000`.
 - `npm run lint:typed`: Validação estrita de promises e funções assíncronas.
 - `npm run lint:rules`: Auto-checagem das regras de qualidade locais (`scripts/verify-quality-rules.mjs`).
 - `npm test`: Execução da suíte de testes unitários com Vitest.
+- `npm run test:e2e`: Execução dos testes ponta a ponta do fluxo principal com Playwright.
 - `npm run build`: Compilação de produção com otimização estática.
 - `npm run db:generate`: Geração de migrações SQL com Drizzle Kit (quando houver novas tabelas).
 
@@ -47,6 +48,13 @@ O servidor local estará disponível em `http://localhost:3000`.
 - [Evidências e Setup do Toolkit](docs/setup.md)
 - [Plano Original de Referência](PLANO.md)
 
-## Próxima entrega
+## Estado do MVP
 
-Implementação do módulo de dados de culturas e algoritmo de recomendação determinístico (`src/lib/recommendation`), validado com testes unitários em Vitest para os biomas brasileiros e tipos de espaço residencial.
+O MVP descrito em [PLANO.md](PLANO.md) e [PRODUCT.md](PRODUCT.md) está implementado e validado:
+
+- Onboarding interativo em 3 passos com GPS (`navigator.geolocation`), fallback por IP e busca de municípios via Open-Meteo.
+- Catálogo agronômico curado com 15 culturas em `src/data/culturas.json` e motor de recomendação determinístico (`src/lib/recommendation`).
+- Calculadora de mudas/substrato (`src/lib/calculator`), diagnóstico foliar visual com soluções caseiras (`src/lib/diagnostic`) e alertas climáticos de rega.
+- Jornada do cultivo com rotina diária ("Hoje"), diário fotográfico compactado no cliente e exportação/restauração de backup em JSON.
+- Assistente híbrido (`/api/assistente`) ancorado no contexto completo do plantio (local, fase, dias, tarefas pendentes) via Gemma 4 / Ollama com fallback determinístico Embrapa.
+- Suporte PWA com Service Worker (`public/sw.js`), Web App Manifest e Dockerfile para publicação.

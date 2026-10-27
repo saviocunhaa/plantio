@@ -52,20 +52,18 @@ Todos os 9 arquivos do manifesto oficial do toolkit foram preenchidos com dados 
 | `npm run typecheck` | Validado | `next typegen && tsc --noEmit` completou com sucesso; rotas estáticas e dinâmicas tipadas. |
 | `npm run lint:typed` | Validado | `eslint --config eslint.typed.config.mjs .` executou com 0 erros em promises assíncronas. |
 | `npm run lint:rules` | Validado | `verify-quality-rules.mjs` confirmou: `max-lines: ok`, `no-direct-console: ok`, `no-direct-data-access: ok`. |
-| `npm test` | Validado | 7 arquivos de teste e 20 testes aprovados no Vitest (recomendação, clima, plantios, rotas de API, env, logger e db). |
-| `npm run build` | Validado | Next.js 16 compilou com sucesso todas as 7 rotas (/api/clima, /api/recomendar, /cultura/[id], /, /manifest.webmanifest). |
+| `npm test` | Validado | 10 arquivos de teste e 33 testes aprovados no Vitest (recomendação, clima, plantios, calculadora, diagnóstico, assistente, rotas de API, env, logger e db). |
+| `npm run build` | Validado | Next.js 16 compilou com sucesso todas as rotas (`/api/assistente`, `/api/clima`, `/api/recomendar`, `/cultura/[id]`, `/`, `/manifest.webmanifest`). |
 | `npm run db:generate` | Validado | Drizzle Kit validou a integridade de schema sem pendências. |
 | `npm run check` | Validado | Pipeline completa encadeada executou e finalizou com código de saída 0. |
 
 ## Funcionalidades do MVP Concluídas
 
-- **Recomendação Agronômica Determinística:** Baseada em regras do clima, época, espaço e horas de sol.
-- **Geocodificação e Clima via Open-Meteo:** Busca de cidades brasileiras e temperatura local em tempo real sem chave de API.
-- **Guia Detalhado da Cultura (`/cultura/[id]`):** Lista de compras de materiais, linha do tempo das fases com tarefas práticas e manejo de pragas caseiras.
-- **Aba "Hoje":** Checklist de rotinas com marcação de tarefas concluídas e barra de progresso.
-- **Aba "Minhas Plantas":** Acompanhamento de dias de cultivo, fase atual e diário de notas.
-- **Aba "Assistente":** Chat com perguntas frequentes e respostas curadas para iniciantes.
-- **PWA / Suporte Offline:** Web App Manifest configurado para instalação na tela inicial de smartphones.
-
-- **Próxima entrega MVP:** Criação do módulo de dados curados de culturas (`src/data/culturas.json`) e implementação do motor de recomendação baseado nas normais climatológicas e regras agronômicas descritas no [PRODUCT.md](../PRODUCT.md).
-- **Decisões externas pendentes:** Seleção do provedor do modelo de IA (Gemma via Ollama local ou endpoint de API) e credenciais de banco PostgreSQL quando a persistência for iniciada.
+- **Onboarding Wizard em 3 passos:** Detecção de localização via GPS (`navigator.geolocation`), fallback automático por IP/Internet e busca por município brasileiro.
+- **Catálogo de 15 Culturas e Recomendação Determinística:** Base curada em `src/data/culturas.json` com pontuação por clima, época, espaço e horas de sol.
+- **Clima e Alertas de Rega via Open-Meteo:** Consulta de temperatura e precipitação real com alertas de chuva e calor forte na rotina do dia.
+- **Guia Detalhado e Calculadora de Plantio (`/cultura/[id]`):** Lista de compras, calculadora de mudas/substrato/economia, fases do ciclo e manejo caseiro de pragas.
+- **Aba "Hoje" e Lembretes Web:** Checklist diário com barra de progresso, atalho de diagnóstico foliar e notificações no navegador.
+- **Aba "Minhas Plantas":** Acompanhamento de dias de cultivo, fase atual, diário com fotos compactadas em canvas e exportação/restauração de backup em JSON validado por Zod.
+- **Aba "Assistente" (`/api/assistente`):** Chat contextual (local, espaço, cultura, fase, dias e tarefas pendentes) integrando Gemma 4 via Ollama local com fallback seguro para a base técnica Embrapa.
+- **PWA, E2E e Deploy:** Web App Manifest, Service Worker offline (`public/sw.js`), suíte E2E em Playwright (`e2e/fluxo-principal.spec.ts`) e `Dockerfile` multi-stage.

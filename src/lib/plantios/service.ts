@@ -1,5 +1,6 @@
+import { z } from "zod";
 import { Cultura, FaseCultura } from "../recommendation/types";
-import { PlantioAtivo } from "./types";
+import { PlantioAtivo, PlantioAtivoSchema } from "./types";
 
 export function calcularDiasPlantio(
   dataPlantio: string,
@@ -93,5 +94,42 @@ export function salvarPlantiosStorage(plantios: PlantioAtivo[]): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(plantios));
   } catch {
     // Modo de navegação anônima ou cota atingida
+  }
+}
+
+const BackupPlantiosSchema = z.array(PlantioAtivoSchema);
+
+export function importarBackupPlantios(
+  jsonBruto: string,
+  atuais: PlantioAtivo[] = []
+): { sucesso: true; plantios: PlantioAtivo[]; importados: number } | { sucesso: false; erro: string } {
+  try {
+    const parsedJson = JSON.parse(jsonBruto) as unknown;
+    const validado = BackupPlantiosSchema.safeParse(parsedJson);
+    if (!validado.success) {
+      return {
+        sucesso: false,
+        erro: "Arquivo de backup inválido ou em formato incompatível.",
+      };
+    }
+
+    const mapa = new Map<string, PlantioAtivo>();
+    for (const item of atuais) {
+      mapa.set(item.id, item);
+    }
+    for (const item of validado.data) {
+      mapa.set(item.id, item);
+    }
+
+    return {
+      sucesso: true,
+      plantios: Array.from(mapa.values()),
+      importados: validado.data.length,
+    };
+  } catch {
+    return {
+      sucesso: false,
+      erro: "Não foi possível ler o arquivo JSON selecionado.",
+    };
   }
 }

@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import {
+  calcularDiasPlantio,
+  gerarTarefasHoje,
+  obterFaseAtual,
+} from "@/lib/plantios/service";
 import { PlantioAtivo } from "@/lib/plantios/types";
+import { Cultura } from "@/lib/recommendation/types";
 
 interface MensagemChat {
   id: string;
@@ -13,6 +19,8 @@ interface MensagemChat {
 
 interface AbaAssistenteProps {
   plantios?: PlantioAtivo[];
+  culturas?: Cultura[];
+  cidadeNome?: string;
   onAbrirDiagnostico?: () => void;
 }
 
@@ -24,10 +32,16 @@ function gerarIdMensagem(prefixo: string): string {
 
 export function AbaAssistente({
   plantios = [],
+  culturas = [],
+  cidadeNome,
   onAbrirDiagnostico,
 }: AbaAssistenteProps) {
   const plantiosAtivos = plantios.filter((p) => p.status === "ativo");
-  const primeiroAtivo = plantiosAtivos[0];
+  const [plantioSelecionadoId, setPlantioSelecionadoId] = useState<string | undefined>(
+    plantiosAtivos[0]?.id
+  );
+  const ativoAtual =
+    plantiosAtivos.find((p) => p.id === plantioSelecionadoId) ?? plantiosAtivos[0];
   const culturasNomes = plantiosAtivos.map((p) => p.cultura_nome).join(", ");
 
   const saudacaoInicial =
@@ -54,6 +68,20 @@ export function AbaAssistente({
     "Como afastar insetos com soluções caseiras?",
   ];
 
+  const culturaAtiva = ativoAtual
+    ? culturas.find((c) => c.id === ativoAtual.cultura_id)
+    : undefined;
+  const diasAtivos = ativoAtual ? calcularDiasPlantio(ativoAtual.data_plantio) : undefined;
+  const faseAtiva =
+    culturaAtiva && diasAtivos !== undefined
+      ? obterFaseAtual(culturaAtiva, diasAtivos)?.nome
+      : undefined;
+  const tarefasPendentes = ativoAtual
+    ? gerarTarefasHoje([ativoAtual], culturas)
+        .filter((t) => !t.concluida)
+        .map((t) => t.titulo)
+    : undefined;
+
   const enviarPergunta = async (pergunta: string) => {
     if (!pergunta.trim() || carregando) return;
 
@@ -73,9 +101,13 @@ export function AbaAssistente({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mensagem: pergunta.trim(),
-          cultura_id: primeiroAtivo?.cultura_id,
-          cultura_nome: primeiroAtivo?.cultura_nome,
-          tipo_espaco: primeiroAtivo?.tipo_espaco,
+          cultura_id: ativoAtual?.cultura_id,
+          cultura_nome: ativoAtual?.cultura_nome,
+          fase_atual: faseAtiva,
+          dias_desde_plantio: diasAtivos,
+          tipo_espaco: ativoAtual?.tipo_espaco,
+          cidade: cidadeNome,
+          tarefas_pendentes: tarefasPendentes,
         }),
       });
 
@@ -135,6 +167,23 @@ export function AbaAssistente({
         <p className="text-xs text-[#d4e4d5] mt-1">
           Tira-dúvidas seguro sem jargões. Conhecimento agronômico verificado.
         </p>
+        {plantiosAtivos.length > 1 && (
+          <div className="mt-2.5 flex items-center gap-2 text-xs">
+            <span className="text-[#c7dfc9]">Planta em foco:</span>
+            <select
+              aria-label="Selecionar plantio em foco no assistente"
+              value={ativoAtual?.id ?? ""}
+              onChange={(e) => setPlantioSelecionadoId(e.target.value)}
+              className="bg-[#1a301c] text-white border border-[#3a633e] rounded-lg px-2 py-1 text-xs outline-hidden"
+            >
+              {plantiosAtivos.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.cultura_nome}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {/* Sugestões rápidas e Diagnóstico */}

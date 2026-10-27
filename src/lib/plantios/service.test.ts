@@ -4,6 +4,7 @@ import { Cultura } from "../recommendation/types";
 import {
   calcularDiasPlantio,
   gerarTarefasHoje,
+  importarBackupPlantios,
   obterFaseAtual,
 } from "./service";
 import { PlantioAtivo } from "./types";
@@ -52,5 +53,47 @@ describe("Serviço de Gestão de Plantios e Tarefas", () => {
     expect(tarefas.length).toBeGreaterThan(0);
     expect(tarefas[0].culturaNome).toBe("Alface Crespa");
     expect(tarefas[0].concluida).toBe(false);
+  });
+
+  it("valida e importa backup JSON de plantios mesclando com os existentes", () => {
+    const existente: PlantioAtivo = {
+      id: "plantio-1",
+      cultura_id: "alface",
+      cultura_nome: "Alface Crespa",
+      tipo_espaco: "vaso",
+      data_plantio: "2026-10-10T12:00:00Z",
+      status: "ativo",
+      diario: [],
+      tarefas_concluidas: {},
+    };
+
+    const jsonBackup = JSON.stringify([
+      {
+        id: "plantio-2",
+        cultura_id: "coentro",
+        cultura_nome: "Coentro",
+        tipo_espaco: "vaso",
+        data_plantio: "2026-10-15T12:00:00Z",
+        status: "ativo",
+        diario: [{ id: "n1", data: "2026-10-16T12:00:00Z", texto: "Semeado" }],
+        tarefas_concluidas: {},
+      },
+    ]);
+
+    const resultado = importarBackupPlantios(jsonBackup, [existente]);
+    expect(resultado.sucesso).toBe(true);
+    if (resultado.sucesso) {
+      expect(resultado.importados).toBe(1);
+      expect(resultado.plantios).toHaveLength(2);
+      expect(resultado.plantios[1].cultura_nome).toBe("Coentro");
+    }
+  });
+
+  it("rejeita backup JSON malformado ou fora do schema Zod", () => {
+    const invalido = importarBackupPlantios('[{"id": 123, "invalido": true}]', []);
+    expect(invalido.sucesso).toBe(false);
+
+    const corrompido = importarBackupPlantios("{nao_eh_json", []);
+    expect(corrompido.sucesso).toBe(false);
   });
 });

@@ -107,11 +107,32 @@ export function gerarRespostaAgronomicaLocal(
     };
   }
 
+  // Fase atual, ciclo e tarefas do dia
+  if (texto.includes("fase") || texto.includes("etapa") || texto.includes("tarefa") || texto.includes("fazer hoje")) {
+    const faseInfo = input.fase_atual
+      ? `na fase de ${input.fase_atual} (dia ${input.dias_desde_plantio ?? 0} de cultivo)`
+      : `em pleno desenvolvimento (ciclo total de ${cultura?.dias_ate_colheita[0] ?? 30} a ${cultura?.dias_ate_colheita[1] ?? 60} dias)`;
+    const primeiraTarefa = input.tarefas_pendentes?.[0];
+    return {
+      resposta: `No momento, ${cNome} está ${faseInfo}. ${
+        primeiraTarefa
+          ? `Sua principal tarefa pendente hoje é: ${primeiraTarefa}.`
+          : "As tarefas principais de hoje já estão em dia!"
+      }`,
+      fonte: "base_agronomica",
+      proxima_acao:
+        primeiraTarefa ??
+        "Verifique a umidade da terra e observe o surgimento de folhas novas.",
+    };
+  }
+
   // Resposta padrão amigável
   return {
     resposta: `Ótima pergunta sobre ${cNome}! Para que ela se desenvolva com vigor, garanta três pilares básicos: terra fofa e bem drenada (vaso com furos no fundo), sol direto na medida certa (${cultura?.sol_horas_min ?? 4}h ou mais) e regas regulares sem encharcar.`,
     fonte: "base_agronomica",
-    proxima_acao: "Observe as folhas e sinta a umidade da terra para acompanhar a evolução hoje.",
+    proxima_acao:
+      input.tarefas_pendentes?.[0] ??
+      "Observe as folhas e sinta a umidade da terra para acompanhar a evolução hoje.",
   };
 }
 

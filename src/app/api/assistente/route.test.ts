@@ -56,4 +56,29 @@ describe("API /api/assistente", () => {
     expect(json.resposta).toContain("Lagartas minúsculas");
     expect(json.resposta).toContain("sabão neutro");
   });
+
+  it("processa contexto completo de cidade, fase, dias e tarefas pendentes", async () => {
+    const req = new Request("http://localhost:3000/api/assistente", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mensagem: "Qual é a fase atual e o que devo fazer hoje?",
+        cultura_id: "alface",
+        cultura_nome: "Alface Crespa",
+        fase_atual: "Crescimento das Folhas",
+        dias_desde_plantio: 12,
+        tipo_espaco: "vaso",
+        cidade: "Juazeiro do Norte, Ceará",
+        tarefas_pendentes: ["Regar a base da planta"],
+      }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+
+    const json = (await res.json()) as { resposta: string; proxima_acao: string };
+    expect(json.resposta).toContain("Crescimento das Folhas");
+    expect(json.resposta).toContain("dia 12");
+    expect(json.proxima_acao).toBe("Regar a base da planta");
+  });
 });

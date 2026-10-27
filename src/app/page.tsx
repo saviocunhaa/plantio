@@ -240,6 +240,7 @@ function HomeConteudo() {
             culturas={culturas}
             onAdicionarNota={handleAdicionarNota}
             onConcluirPlantio={handleConcluirPlantio}
+            onRestaurarBackup={atualizarPlantios}
             onIrParaPlantar={() => setAbaAtiva("plantar")}
           />
         )}
@@ -247,6 +248,8 @@ function HomeConteudo() {
         {abaAtiva === "assistente" && (
           <AbaAssistente
             plantios={plantios}
+            culturas={culturas}
+            cidadeNome={cidadeNome}
             onAbrirDiagnostico={() => setDiagnosticoAberto(true)}
           />
         )}
