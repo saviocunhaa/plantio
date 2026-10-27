@@ -1,4 +1,4 @@
-const CACHE_NAME = "plantio-facil-v2";
+const CACHE_NAME = "plantio-facil-v3";
 const SHELL_URLS = ["/", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (event) => {

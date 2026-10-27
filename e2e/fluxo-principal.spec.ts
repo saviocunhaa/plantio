@@ -8,6 +8,7 @@ test.describe("Fluxo Principal do Plantio Fácil", () => {
     page.on("pageerror", (err) => errosConsole.push(err.message));
 
     await page.goto("/");
+    await expect(page.locator("header")).toHaveCSS("background-color", "rgb(36, 66, 39)");
     await expect(page.getByText("Bem-vindo ao Plantio Fácil")).toBeVisible();
 
     await page.context().grantPermissions(["geolocation"]);
